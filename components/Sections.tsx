@@ -591,7 +591,7 @@ export const Mission: React.FC = () => (
               <p className="text-gray-500 text-base md:text-lg font-light leading-relaxed">Nous pensons que votre énergie doit être dédiée à votre art, pas à vos relances. Blyss est votre assistant invisible qui gère tout en arrière-plan.</p>
             </div>
             <div className="relative p-6 md:p-8 bg-pink-50/40 rounded-[2rem] md:rounded-[2.5rem] border border-pink-100/50 italic text-gray-700 text-base md:text-lg shadow-sm">
-              "Nous avons crée Blyss pour les professionnelles ongulaires à leurs comptes ou en salons. Elles doivent passer moins de temps sur la partie organisationnelle et prioriser leurs talents !"
+              "Nous avons créé Blyss pour les professionnelles ongulaires à leurs comptes ou en salons. Elles doivent passer moins de temps sur la partie organisationnelle et prioriser leurs talents !"
               <br /><span className="font-bold text-[#eb5e9d] mt-4 block not-italic font-outfit text-xs tracking-widest uppercase">— Noah, Fondateur de Blyss</span>
             </div>
           </div>
@@ -619,7 +619,7 @@ export const Features: React.FC = () => {
           {[
             { icon: <Calendar size={32} className="w-10 h-10" />, title: "Notifications Instantanées", desc: "Soyez alertée immédiatement pour chaque réservation ou annulation.", color: "bg-pink-100/80 text-[#eb5e9d]" },
             { icon: <Sparkles size={32} className="w-10 h-10" />, title: "Portfolio Photo", desc: "Liez votre profil instagram pour présenter vos réalisations.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-            { icon: <ShieldCheck size={32} className="w-10 h-10" />, title: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
+            { icon: <ShieldCheck size={32} className="w-10 h-10" />, title: "Sécurité Totale", desc: "Terminés les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
           ].map((feature, i) => (
             <div key={i} className="flex flex-col items-center text-center group cursor-default">
               <div className={`w-20 h-20 ${feature.color} rounded-[1.75rem] flex items-center justify-center mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
@@ -637,7 +637,7 @@ export const Features: React.FC = () => {
             {[
               { icon: <Calendar size={20} />, title: "Notifications", fullTitle: "Notifications Instantanées", desc: "Soyez alertée immédiatement pour chaque réservation ou annulation.", color: "bg-pink-100/80 text-[#eb5e9d]" },
               { icon: <Sparkles size={20} />, title: "Portfolio", fullTitle: "Portfolio Photo", desc: "Liez votre profil instagram pour présenter vos réalisations.", color: "bg-pink-100/80 text-[#eb5e9d]" },
-              { icon: <ShieldCheck size={20} />, title: "Sécurité", fullTitle: "Sécurité Totale", desc: "Terminé les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
+              { icon: <ShieldCheck size={20} />, title: "Sécurité", fullTitle: "Sécurité Totale", desc: "Terminés les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
             ].map((feature, i) => (
               <div key={i} className="flex flex-col items-center w-1/3" onClick={() => setActiveFeature(activeFeature === i ? null : i)}>
                 <div className={`w-14 h-14 ${feature.color} rounded-2xl flex items-center justify-center mb-2 transition-all duration-300 ${activeFeature === i ? 'scale-110 ring-2 ring-pink-100 shadow-lg' : 'shadow-sm'}`}>
@@ -676,14 +676,14 @@ export const AppShowcase: React.FC = () => {
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-8 leading-tight">Tout votre salon <br /> dans votre <span className="text-[#eb5e9d]">poche.</span></h2>
           <div className="grid grid-cols-2 gap-3 md:gap-6">
             {[
-              { label: "Planning", icon: <Calendar size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Profiles", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
-              { label: "Fidélité", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
+              { prefix: "Votre", label: "planning", icon: <Calendar size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
+              { prefix: "Vos", label: "Clientes", icon: <User size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
+              { prefix: "Votre", label: "Profil", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
+              { prefix: "Votre", label: "Fidélité", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
             ].map((item, i) => (
               <GlassCard key={i} className={`p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
                 <div className={`${item.color} ${item.bg} p-3 md:p-4 rounded-2xl mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm border`}>{item.icon}</div>
-                <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">Vos {item.label}</span>
+                <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">{item.prefix} {item.label}</span>
               </GlassCard>
             ))}
           </div>
@@ -986,7 +986,7 @@ const ComparisonTable: React.FC = () => {
     { label: "Gestion des rendez-vous", start: checkIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Notifications clients (Push notifications)", start: checkIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Tableau de bord des rendez-vous", start: checkIcon, serenite: checkIcon, signature: checkIcon },
-    { label: "Module finance : Statistique & Facturation", start: minusIcon, serenite: checkIcon, signature: checkIcon },
+    { label: "Module finance : Statistiques & Facturation", start: minusIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Portfolio photos intégré au profil", start: minusIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Rappels automatiques des rendez-vous", start: minusIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Rappels client post-prestation", start: minusIcon, serenite: minusIcon, signature: checkIcon },
@@ -1130,7 +1130,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
       price: "29,90",
       description: "Gagnez du temps avec une gestion financière et photo intégrée.",
       features: [
-        "Module Finance & Stats",
+        "Module Finances & Stats",
         "Portfolio photos intégré",
         "Rappels rdv automatiques",
         "+ fonctionnalités de la formule Start"
@@ -1187,9 +1187,10 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
                   </div>
                 )}
 
-                <div className={`flex w-14 h-14 md:w-16 md:h-16 rounded-2xl items-center justify-center mb-6 transition-colors border ${plan.isPopular
-                  ? 'bg-[#eb5e9d] text-white shadow-lg shadow-pink-200'
-                  : 'bg-white/50 backdrop-blur-sm text-gray-400 border-white/50'
+                <div className={`flex w-14 h-14 md:w-16 md:h-16 rounded-2xl items-center justify-center mb-6 transition-all duration-300 border 
+                  ${(plan.isPopular || activeIndex === i)
+                    ? 'bg-[#eb5e9d] text-white border-[#eb5e9d] shadow-lg shadow-pink-200'
+                    : 'bg-white/50 backdrop-blur-sm text-gray-400 border-white/50 group-hover:bg-[#eb5e9d] group-hover:text-white group-hover:border-[#eb5e9d] group-hover:shadow-lg group-hover:shadow-pink-200 group-active:bg-[#eb5e9d] group-active:text-white group-active:scale-95'
                   }`}>
                   {plan.icon}
                 </div>
@@ -1291,7 +1292,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onSeeDetails, onJoin }) => {
   return (
-    <section className="py-20 px-6 bg-white" id="pricing">
+    <section className="py-20 px-6 bg-gradient-to-b from-gray-300 via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
@@ -1306,7 +1307,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
 /* PricingPage */
 export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
   return (
-    <div className="pt-32 pb-20 px-6 bg-white min-h-screen">
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-gray-300 via-gray-50 to-white min-h-screen">
       <div className="container mx-auto max-w-7xl text-center">
         <h1 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h1>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
@@ -1471,10 +1472,126 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
   );
 };
 
+
+/* NewsletterModal */
+const NewsletterModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(() => {
+    return !sessionStorage.getItem('blyss_newsletter_seen');
+  });
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleClose = () => {
+    setIsOpen(false);
+    sessionStorage.setItem('blyss_newsletter_seen', 'true');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setErrorMessage("Veuillez entrer une adresse email valide.");
+      return;
+    }
+
+    setStatus('loading');
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setStatus('success');
+      setTimeout(() => {
+        handleClose();
+      }, 2000);
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage("Une erreur est survenue. Veuillez réessayer.");
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={handleClose}></div>
+      <div className="bg-white w-full max-w-md rounded-[2.5rem] p-5 md:p-10 relative z-10 shadow-2xl">
+        <button
+          onClick={handleClose}
+          className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors"
+          aria-label="Fermer"
+        >
+          <X size={20} className="text-gray-500" />
+        </button>
+
+        <div className="text-center">
+          <div className="w-14 h-14 md:w-20 md:h-20 mx-auto rounded-2xl md:rounded-3xl bg-pink-50 flex items-center justify-center mb-3 md:mb-6 shadow-sm border border-pink-100/50">
+            <Mail size={24} className="text-[#eb5e9d] md:w-10 md:h-10" />
+          </div>
+
+          <h2 className="text-xl md:text-3xl font-serif-elegant italic mb-2 md:mb-4">Prête pour <span className="text-[#eb5e9d]">l'excellence ?</span></h2>
+          <p className="text-gray-500 text-xs md:text-sm leading-relaxed mb-6 md:mb-8">
+            Rejoins notre newsletter pour recevoir nos conseils business exclusifs et les dernières tendances Nail Art directement dans ta boîte mail.
+          </p>
+
+          {status === 'success' ? (
+            <div className="bg-green-50 text-green-600 p-4 rounded-2xl flex items-center justify-center gap-2 animate-in zoom-in-95">
+              <CheckCircle2 size={20} />
+              <span className="font-bold">Inscription réussie ! ✨</span>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === 'error') setStatus('idle');
+                  }}
+                  placeholder="ton@email.com"
+                  className={`w-full bg-gray-50 border ${status === 'error' ? 'border-red-300' : 'border-gray-200'} rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all`}
+                  required
+                />
+                {status === 'error' && (
+                  <p className="text-red-500 text-[10px] absolute -bottom-5 left-2 font-medium">
+                    {errorMessage}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full bg-[#eb5e9d] text-white py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold shadow-lg shadow-pink-200 hover:bg-pink-600 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              >
+                {status === 'loading' ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    <span>Traitement...</span>
+                  </>
+                ) : (
+                  <span>S'inscrire</span>
+                )}
+              </button>
+            </form>
+          )}
+
+          <button
+            onClick={handleClose}
+            className="mt-6 text-gray-400 text-xs font-medium hover:text-gray-600 transition-colors uppercase tracking-widest"
+          >
+            Accéder directement au téléchargement
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* DownloadPage */
 export const DownloadPage: React.FC = () => {
   return (
     <div className="bg-white">
+      <NewsletterModal />
       <DownloadAppSection />
     </div>
   );
