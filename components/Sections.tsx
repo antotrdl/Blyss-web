@@ -701,97 +701,7 @@ export const AppShowcase: React.FC = () => {
   );
 };
 
-/* FloatingAIChat */
-export const FloatingAIChat: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'assistant', text: string }[]>([
-    { role: 'assistant', text: "Bonjour ! Je suis l'IA de Blyss. Une question sur votre business ou une panne d'inspiration Nail Art ? Je suis là ! ✨" }
-  ]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
-
-    const userMsg = input;
-    setInput("");
-    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-    setIsLoading(true);
-
-    try {
-      const response = await geminiService.getEventAdvice(userMsg);
-      setMessages(prev => [...prev, { role: 'assistant', text: response }]);
-    } catch (e) {
-      setMessages(prev => [...prev, { role: 'assistant', text: "Oups, une petite erreur. Réessayez plus tard ! 💅" }]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <>
-      <div className={`fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none ${isOpen ? 'pointer-events-auto' : ''}`}>
-        {isOpen && (
-          <div className="mb-4 w-[90vw] md:w-[350px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col pointer-events-auto animate-in fade-in slide-in-from-bottom-10 duration-300">
-            <div className="p-4 bg-gradient-to-r from-[#eb5e9d] to-pink-500 text-white flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Sparkles size={18} />
-                <span className="font-bold">Assistant Blyss</span>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1 rounded-full transition-colors"><X size={16} /></button>
-            </div>
-            <div className="h-[350px] overflow-y-auto p-4 bg-gray-50 flex flex-col gap-3">
-              {messages.map((m, i) => (
-                <div key={i} className={`max-w-[85%] p-3 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[#eb5e9d] text-white self-end rounded-br-none' : 'bg-white text-gray-700 shadow-sm self-start rounded-bl-none border border-gray-100'}`}>
-                  {m.text}
-                </div>
-              ))}
-              {isLoading && (
-                <div className="self-start bg-white p-3 rounded-2xl rounded-bl-none shadow-sm border border-gray-100">
-                  <Loader2 size={16} className="animate-spin text-[#eb5e9d]" />
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-            <div className="p-3 bg-white border-t border-gray-100 flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Posez votre question..."
-                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#eb5e9d] transition-colors"
-              />
-              <button
-                onClick={handleSend}
-                disabled={isLoading || !input.trim()}
-                className="bg-[#eb5e9d] text-white p-2 rounded-xl hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Send size={18} />
-              </button>
-            </div>
-          </div>
-        )}
-
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="pointer-events-auto w-14 h-14 md:w-16 md:h-16 bg-[#eb5e9d] text-white rounded-full shadow-lg shadow-pink-500/40 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group"
-        >
-          {isOpen ? <ChevronDown size={28} /> : <MessageCircle size={28} className="group-hover:animate-pulse" />}
-        </button>
-      </div>
-    </>
-  );
-};
 
 /* Pricing Modal */
 const PricingModal: React.FC<{
@@ -1292,7 +1202,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onSeeDetails, onJoin }) => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-gray-300 via-gray-50 to-white" id="pricing">
+    <section className="py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
@@ -1318,6 +1228,311 @@ export const PricingPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
   )
 }
 
+/* AboutPage */
+export const AboutPage: React.FC = () => {
+  return (
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white min-h-screen relative overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-pink-200/20 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-100/20 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="container mx-auto max-w-5xl relative z-10">
+        <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-pink-50 text-[#eb5e9d] text-sm font-bold mb-6 border border-pink-100">
+            Notre Vision
+          </div>
+          <h1 className="text-5xl md:text-7xl font-serif-elegant italic mb-8">
+            L'ambition <span className="text-[#eb5e9d]">Blyss</span>
+          </h1>
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-light">
+            Redéfinir les standards de la beauté connectée, un salon à la fois.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center mb-24">
+          <div className="relative group">
+            <div className="absolute -inset-4 bg-gradient-to-tr from-pink-100 to-transparent rounded-[2.5rem] transform rotate-3 transition-transform group-hover:rotate-2 duration-500" />
+            <div className="relative bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-pink-100/20 border border-gray-100">
+              <h3 className="text-3xl font-serif-elegant mb-6">Genèse</h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Blyss est née d'un constat simple mais puissant : les professionnels de la beauté, et en particulier les prothésistes ongulaires, sont des artistes qui méritent des outils à la hauteur de leur talent.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Fondée en 2024 à Annecy, notre aventure a commencé avec une mission claire : révolutionner la gestion des salons grâce à une technologie invisible, fluide et élégante, préservant l'humain au cœur de chaque échange.
+              </p>
+            </div>
+          </div>
+          <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-1000 delay-200">
+            <div className="flex gap-6 items-start">
+              <div className="w-12 h-12 rounded-2xl bg-pink-50 flex items-center justify-center text-[#eb5e9d] shrink-0">
+                <Star size={24} />
+              </div>
+              <div>
+                <h4 className="text-xl font-bold mb-2">Excellence</h4>
+                <p className="text-gray-500 leading-relaxed">Nous ne faisons aucun compromis sur la qualité. Chaque fonctionnalité est pensée, designée et peaufinée pour être la meilleure du marché.</p>
+              </div>
+            </div>
+            <div className="flex gap-6 items-start">
+              <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-500 shrink-0">
+                <Zap size={24} />
+              </div>
+              <div>
+                <h4 className="text-xl font-bold mb-2">Innovation</h4>
+                <p className="text-gray-500 leading-relaxed">Nous repoussons sans cesse les limites pour vous offrir des outils avant-gardistes qui anticipent vos besoins futurs.</p>
+              </div>
+            </div>
+            <div className="flex gap-6 items-start">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
+                <Heart size={24} />
+              </div>
+              <div>
+                <h4 className="text-xl font-bold mb-2">Passion</h4>
+                <p className="text-gray-500 leading-relaxed">Votre passion est notre moteur. Nous mettons tout notre cœur et notre énergie à soutenir votre créativité au quotidien.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-100/90 backdrop-blur-xl rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden border border-white shadow-2xl shadow-gray-200/50">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#eb5e9d]/5 rounded-full blur-[120px]" />
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-5xl font-serif-elegant italic mb-6 text-gray-900">Notre Mission</h2>
+            <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-light mb-10">
+              "Libérer les entrepreneurs de la beauté des contraintes administratives pour qu'ils puissent se concentrer sur l'essentiel : sublimer leurs clients."
+            </p>
+            <div className="w-24 h-1 bg-[#eb5e9d] mx-auto rounded-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ContactPage */
+export const ContactPage: React.FC = () => {
+  return (
+    <div className="pt-32 pb-20 px-6 min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-transparent rounded-b-[4rem] shadow-sm z-0" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">Parlons de <span className="text-[#eb5e9d]">Vous</span></h1>
+          <p className="text-gray-500 text-lg max-w-xl mx-auto">
+            Une question, un partenariat ou simplement envie de discuter ?<br />
+            Notre équipe est à votre écoute.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+          {/* Contact Info Cards */}
+          <div className="lg:col-span-1 space-y-6 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
+            <div className="bg-white p-6 rounded-3xl shadow-lg shadow-gray-100 border border-white hover:border-pink-100 transition-colors group">
+              <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-[#eb5e9d] mb-4 group-hover:scale-110 transition-transform">
+                <Mail size={24} />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Email</h3>
+              <p className="text-gray-500 text-sm mb-4">Notre équipe vous répond sous 24h.</p>
+              <a href="mailto:contact@blyss.app" className="text-[#eb5e9d] font-semibold hover:underline">contact@blyss.app</a>
+            </div>
+
+            <div className="bg-white p-6 rounded-3xl shadow-lg shadow-gray-100 border border-white hover:border-pink-100 transition-colors group">
+              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+                <MessageCircle size={24} />
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Réseaux Sociaux</h3>
+              <p className="text-gray-500 text-sm mb-4">Suivez nos actualités et coulisses.</p>
+              <div className="flex gap-4">
+                <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all"><Instagram size={16} /></a>
+                <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all"><Linkedin size={16} /></a>
+              </div>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="lg:col-span-2 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+            <div className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-white">
+              <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-bold text-gray-700 ml-1 group-focus-within:text-[#eb5e9d] transition-colors">Nom complet</label>
+                    <div className="relative">
+                      <input type="text" className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium" placeholder="Votre nom" />
+                      <User size={18} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                    </div>
+                  </div>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-bold text-gray-700 ml-1 group-focus-within:text-[#eb5e9d] transition-colors">Email</label>
+                    <div className="relative">
+                      <input type="email" className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium" placeholder="votre@email.com" />
+                      <Mail size={18} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 group">
+                  <label className="text-sm font-bold text-gray-700 ml-1 group-focus-within:text-[#eb5e9d] transition-colors">Sujet</label>
+                  <input type="text" className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium" placeholder="De quoi s'agit-il ?" />
+                </div>
+
+                <div className="space-y-2 group">
+                  <label className="text-sm font-bold text-gray-700 ml-1 group-focus-within:text-[#eb5e9d] transition-colors">Message</label>
+                  <textarea rows={6} className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium resize-none" placeholder="Racontez-nous tout..."></textarea>
+                </div>
+
+                <div className="pt-4">
+                  <button className="w-full bg-[#eb5e9d] text-white py-5 rounded-2xl font-bold text-lg shadow-xl shadow-pink-200 hover:bg-pink-600 transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
+                    Envoyer le message <Send size={20} />
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* LegalPage */
+export const LegalPage: React.FC = () => {
+  return (
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white min-h-screen">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-16">
+          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Informations Juridiques</p>
+          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">Mentions <span className="text-[#eb5e9d]">Légales</span></h1>
+        </div>
+
+        <div className="space-y-8">
+          <section className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-[#eb5e9d] font-bold">1</div>
+              <h3 className="text-2xl font-bold text-gray-900">Éditeur du site</h3>
+            </div>
+            <div className="pl-4 md:pl-16 space-y-2 text-gray-600 leading-relaxed">
+              <p className="flex justify-between border-b border-gray-50 pb-2"><strong>Dénomination sociale</strong> <span>Noah Dekeyzer</span></p>
+              <p className="flex justify-between border-b border-gray-50 pb-2"><strong>Forme juridique</strong> <span>(Entrepreneur Individuel - EI)</span></p>
+              <p className="flex justify-between border-b border-gray-50 pb-2"><strong>Siège social</strong> <span>74000 Annecy</span></p>
+              <p className="flex justify-between border-b border-gray-50 pb-2"><strong>SIREN</strong> <span>NON</span></p>
+              <p className="flex justify-between border-b border-gray-50 pb-2"><strong>Directeur de la publication</strong> <span>Noah Dekeyzer</span></p>
+              <p className="flex justify-between pt-2"><strong>Contact</strong> <span>contact@blyss.app</span></p>
+            </div>
+          </section>
+
+          <section className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-[#eb5e9d] font-bold">2</div>
+              <h3 className="text-2xl font-bold text-gray-900">Hébergement</h3>
+            </div>
+            <div className="pl-4 md:pl-16 text-gray-600 leading-relaxed">
+              <p className="mb-2">Le site est hébergé par <strong>OVH SAS</strong>.</p>
+            </div>
+          </section>
+
+          <section className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-[#eb5e9d] font-bold">3</div>
+              <h3 className="text-2xl font-bold text-gray-900">Propriété Intellectuelle</h3>
+            </div>
+            <div className="pl-4 md:pl-16 text-gray-600 leading-relaxed text-justify">
+              L'ensemble du contenu de ce site (textes, images, vidéos, animations, sons, marque, logo, etc.) est la propriété exclusive de Blyss, sauf mention contraire. Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l'accord exprès par écrit de Blyss.
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* PrivacyPage */
+export const PrivacyPage: React.FC = () => {
+  return (
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white min-h-screen">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-16">
+          <div className="inline-block p-3 bg-pink-100 rounded-full mb-4 text-[#eb5e9d]"><ShieldCheck size={32} /></div>
+          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">Politique de <span className="text-[#eb5e9d]">Confidentialité</span></h1>
+          <p className="text-gray-500 max-w-2xl mx-auto">Votre confiance est précieuse. Nous nous engageons à protéger vos données avec la plus grande transparence.</p>
+        </div>
+
+        <div className="bg-white rounded-[3rem] p-8 md:p-16 border border-gray-100 shadow-xl shadow-gray-100/50 space-y-12">
+          <p className="text-lg text-gray-600 leading-relaxed font-light border-b border-gray-100 pb-8">
+            Chez Blyss, la protection de vos données personnelles est une priorité absolue. Cette politique détaille comment nous collectons, utilisons et protégeons vos informations conformément au RGPD.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-gray-900">1. Collecte des données</h3>
+              <p className="text-sm text-gray-600 leading-relaxed text-justify">
+                Nous collectons les informations que vous nous fournissez directement (inscription, formulaires) et certaines données techniques automatiques (cookies, logs) nécessaires au bon fonctionnement du service.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-gray-900">2. Utilisation</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-[#eb5e9d] rounded-full" /> Amélioration de nos services</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-[#eb5e9d] rounded-full" /> Gestion de votre compte</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-[#eb5e9d] rounded-full" /> Support client et assistance</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-[#eb5e9d] rounded-full" /> Sécurité de la plateforme</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-6 bg-gray-50 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2"><div className="w-2 h-6 bg-[#eb5e9d] rounded-full"></div> Vos Droits</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Conformément à la réglementation, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données.
+            </p>
+            <div className="flex items-center gap-4 pt-2">
+              <a href="mailto:privacy@blyss.app" className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#eb5e9d] hover:text-white hover:border-[#eb5e9d] transition-all shadow-sm">Exercer mes droits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* TermsPage */
+export const TermsPage: React.FC = () => {
+  return (
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white min-h-screen">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-16">
+          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">CGV</p>
+          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">Conditions Générales de <span className="text-[#eb5e9d]">Vente</span></h1>
+        </div>
+
+        <div className="space-y-6">
+          {[
+            { title: "Préambule", content: "Les présentes CGV régissent les relations contractuelles entre la société [Nom] et ses clients utilisateurs de l'application Blyss. Toute souscription implique l'adhésion sans réserve à ces conditions." },
+            { title: "Article 1 - Tarifs", content: "Les prix de nos abonnements sont indiqués en euros TTC. Blyss se réserve le droit de modifier ses prix à tout moment. Le prix applicable est celui en vigueur au jour de la commande." },
+            { title: "Article 2 - Paiement", content: "Le paiement est exigible immédiatement à la commande. Le règlement s'effectue par carte bancaire via notre prestataire de paiement sécurisé (Stripe/Apple Pay)." },
+            { title: "Article 3 - Livraison", content: "L'accès aux services premium est activé immédiatement après confirmation du paiement. Un email récapitulatif est envoyé systématiquement." },
+            { title: "Article 4 - Rétractation", content: "Conformément à la loi, vous disposez de 14 jours pour vous rétracter. Toutefois, l'activation immédiate du service peut entraîner la renonciation à ce délai si vous commencez à utiliser le service avant la fin de cette période." }
+          ].map((article, idx) => (
+            <div key={idx} className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-md transition-all hover:scale-[1.01] duration-300">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                <span className="text-[#eb5e9d] font-serif-elegant italic text-2xl opacity-80">{idx === 0 ? '§' : idx}</span>
+                {article.title}
+              </h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed pl-4 border-l-2 border-pink-100">
+                {article.content}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <p className="text-xs text-gray-400">Dernière mise à jour : Janvier 2026</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* DownloadAppSection */
 export const DownloadAppSection: React.FC = () => {
   return (
@@ -1331,49 +1546,61 @@ export const DownloadAppSection: React.FC = () => {
             Retrouvez toutes les fonctionnalités de Blyss où que vous soyez. Gérez votre planning, encaissez vos clientes et suivez vos stats en temps réel.
           </p>
           <div className="flex flex-row justify-center gap-3 mb-8 md:mb-12 w-full px-2">
-            <button
-              className="
-      flex-1 max-w-[160px] h-12
-      bg-black/80 backdrop-blur-xl
-      text-white font-semibold
-      flex items-center justify-center gap-2
-      rounded-xl
-      border border-white/10
-      transition-all duration-300
-      hover:scale-105
-      shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
-      hover:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]
-      text-xs sm:text-sm
-    "
-            >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-              </svg>
-              <span>App Store</span>
-            </button>
+            <div className="relative group">
+              <div className="absolute -top-3 -right-2 bg-[#eb5e9d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-20 shadow-sm">
+                Bientôt
+              </div>
+              <button
+                className="
+        flex-1 w-[160px] h-12
+        bg-black/80 backdrop-blur-xl
+        text-white font-semibold
+        flex items-center justify-center gap-2
+        rounded-xl
+        border border-white/10
+        transition-all duration-300
+        group-hover:scale-105
+        shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
+        group-hover:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]
+        text-xs sm:text-sm
+        cursor-not-allowed opacity-80
+      "
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
+                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+                </svg>
+                <span>App Store</span>
+              </button>
+            </div>
 
-            <button
-              className="
-      flex-1 max-w-[160px] h-12
-      bg-white/20 backdrop-blur-xl
-      text-white font-semibold
-      flex items-center justify-center gap-2
-      rounded-xl
-      border border-white/30
-      transition-all duration-300
-      hover:scale-105
-      shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]
-      hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)]
-      text-xs sm:text-sm
-    "
-            >
-              <img
-                src="/google_play_icon.webp"
-                alt="Google Play"
-                className="w-5 h-5"
-              />
-              <span>Google Play</span>
-            </button>
+            <div className="relative group">
+              <div className="absolute -top-3 -right-2 bg-[#eb5e9d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-20 shadow-sm delay-100">
+                Bientôt
+              </div>
+              <button
+                className="
+        flex-1 w-[160px] h-12
+        bg-white/20 backdrop-blur-xl
+        text-white font-semibold
+        flex items-center justify-center gap-2
+        rounded-xl
+        border border-white/30
+        transition-all duration-300
+        group-hover:scale-105
+        shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]
+        group-hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.2)]
+        text-xs sm:text-sm
+        cursor-not-allowed opacity-80
+      "
+              >
+                <img
+                  src="/google_play_icon.webp"
+                  alt="Google Play"
+                  className="w-5 h-5"
+                />
+                <span>Google Play</span>
+              </button>
+            </div>
           </div>
 
 
@@ -1446,17 +1673,17 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
           <div>
             <h4 className="font-bold text-gray-900 mb-6">Entreprise</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><a href="#" className="hover:text-[#eb5e9d] transition-colors">À propos</a></li>
-              <li><a href="#" className="hover:text-[#eb5e9d] transition-colors">Contact</a></li>
+              <li><button onClick={() => setCurrentPage('about')} className="hover:text-[#eb5e9d] transition-colors">À propos</button></li>
+              <li><button onClick={() => setCurrentPage('contact')} className="hover:text-[#eb5e9d] transition-colors">Contact</button></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-gray-900 mb-6">Légal</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><a href="#" className="hover:text-[#eb5e9d] transition-colors">Mentions légales</a></li>
-              <li><a href="#" className="hover:text-[#eb5e9d] transition-colors">Politique de confidentialité</a></li>
-              <li><a href="#" className="hover:text-[#eb5e9d] transition-colors">CGV</a></li>
+              <li><button onClick={() => setCurrentPage('legal')} className="hover:text-[#eb5e9d] transition-colors">Mentions légales</button></li>
+              <li><button onClick={() => setCurrentPage('privacy')} className="hover:text-[#eb5e9d] transition-colors">Politique de confidentialité</button></li>
+              <li><button onClick={() => setCurrentPage('terms')} className="hover:text-[#eb5e9d] transition-colors">CGV</button></li>
             </ul>
           </div>
         </div>
