@@ -159,8 +159,8 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
               <>
                 {type === 'screenshot' && (
                   <img
-                    src="/dashboard_new.png"
-                    className="absolute inset-x-0 bottom-0 w-full h-full object-cover object-bottom"
+                    src="/dashboard_final_v2.jpg"
+                    className="absolute inset-x-0 -top-[5%] w-full h-[105%] object-cover object-top"
                     alt="App Dashboard"
                   />
                 )}
@@ -993,19 +993,42 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
   const [selectedPlan, setSelectedPlan] = useState<{ title: string, price: string, description: string, features: string[] } | null>(null);
   const [isSalonsModalOpen, setIsSalonsModalOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0); // Signature (first) par défaut
+  const [activeIndex, setActiveIndex] = useState(1); // Signature (middle) par défaut
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Removed initial scroll effect as Signature is now first
+  useEffect(() => {
+    // Scroll Initial instantané pour centrer l'offre Signature (index 1) sans animation
+    // Timeout léger pour s'assurer que le rendu est terminé
+    const timer = setTimeout(() => {
+      scrollToIndex(1, false);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = (index: number, smooth = true) => {
     if (scrollRef.current) {
       const container = scrollRef.current;
-      const cardWidth = container.offsetWidth * 0.8;
-      const gap = 24;
-      const scrollLeft = index * (cardWidth + gap);
-      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-      setActiveIndex(index);
+      const targetCard = container.children[index] as HTMLElement;
+
+      if (targetCard) {
+        // Calcul précis pour centrer l'élément
+        // On s'assure de récupérer la position relative au conteneur
+        const cardLeft = targetCard.offsetLeft;
+        const cardWidth = targetCard.offsetWidth;
+        const containerWidth = container.offsetWidth;
+
+        // Formule : Position gauche de la carte - (Marge pour centrer dans le conteneur)
+        // Marge = (Largeur conteneur - Largeur carte) / 2
+        const centerOffset = (containerWidth - cardWidth) / 2;
+        const newScrollLeft = cardLeft - centerOffset;
+
+        container.scrollTo({
+          left: newScrollLeft,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+
+        setActiveIndex(index);
+      }
     }
   };
 
@@ -1014,6 +1037,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
       const container = scrollRef.current;
       const scrollPos = container.scrollLeft;
       const containerWidth = container.offsetWidth;
+      // Estimation pour la mise à jour de l'index pendant le scroll manuel
       const cardWidth = containerWidth * 0.8;
       const gap = 24;
 
@@ -1026,6 +1050,19 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
   };
 
   const plans = [
+    {
+      title: "Start",
+      price: "39,90",
+      description: "L'essentiel pour lancer votre activité sereinement.",
+      features: [
+        "Réservation en ligne 24/7",
+        "Gestion des Rendez-vous",
+        "Notifications clients App",
+        "Tableau de bord complet"
+      ],
+      icon: <Zap size={28} />,
+      desktopOrder: "md:order-1"
+    },
     {
       title: "Signature",
       price: "24,90",
@@ -1040,19 +1077,6 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
       commitment: "Engagement 12 mois",
       icon: <Sparkles size={32} />,
       desktopOrder: "md:order-2"
-    },
-    {
-      title: "Start",
-      price: "39,90",
-      description: "L'essentiel pour lancer votre activité sereinement.",
-      features: [
-        "Réservation en ligne 24/7",
-        "Gestion des Rendez-vous",
-        "Notifications clients App",
-        "Tableau de bord complet"
-      ],
-      icon: <Zap size={28} />,
-      desktopOrder: "md:order-1"
     },
     {
       title: "Sérénité",
@@ -1076,13 +1100,13 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
         {/* Navigation Arrows (Mobile only) */}
         <div className="md:hidden flex items-center justify-between absolute top-1/2 -translate-y-1/2 w-full px-2 z-30 pointer-events-none">
           <button
-            onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
+            onClick={() => scrollToIndex(Math.max(0, activeIndex - 1), true)}
             className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === 0 ? 'opacity-0' : 'opacity-100'}`}
           >
             <ChevronLeft size={24} />
           </button>
           <button
-            onClick={() => scrollToIndex(Math.min(plans.length - 1, activeIndex + 1))}
+            onClick={() => scrollToIndex(Math.min(plans.length - 1, activeIndex + 1), true)}
             className={`w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-[#eb5e9d] pointer-events-auto transition-opacity ${activeIndex === plans.length - 1 ? 'opacity-0' : 'opacity-100'}`}
           >
             <ChevronRight size={24} />
@@ -1092,7 +1116,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 max-w-6xl mx-auto items-center md:items-stretch pt-20 md:pt-0 pb-12 md:pb-0 scroll-smooth px-[10vw] md:px-0 no-scrollbar scroll-px-[10vw]"
+          className="relative flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 max-w-6xl mx-auto items-center md:items-stretch pt-20 md:pt-0 pb-12 md:pb-0 scroll-smooth px-[10vw] md:px-0 no-scrollbar scroll-px-[10vw]"
         >
           {plans.map((plan, i) => (
             <div
@@ -1112,7 +1136,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
               >
 
                 {plan.isPopular && (
-                  <div className="block absolute -top-3 md:-top-4 bg-[#eb5e9d] text-white text-[7px] md:text-[10px] font-bold px-3 md:px-6 py-1 md:py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                  <div className="block absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 bg-[#eb5e9d] text-white text-[7px] md:text-[10px] font-bold px-3 md:px-6 py-1 md:py-1.5 rounded-full uppercase tracking-wider shadow-md whitespace-nowrap">
                     Plus Populaire
                   </div>
                 )}
@@ -1331,7 +1355,11 @@ export const AboutPage: React.FC = () => {
                 "C'est en observant mes proches passionnés par leur métier, en partageant leurs défis et leurs réussites quotidiennes, que l'évidence s'est imposée. Blyss n'est pas seulement un outil, c'est le fruit de ces moments partagés et d'une volonté de simplifier votre art. Aujourd'hui, ce produit prend vie pour donner à chacun la liberté de créer sereinement."
               </p>
               <div className="mt-8 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#eb5e9d] flex items-center justify-center text-white font-serif-elegant italic text-xl shadow-md">N</div>
+                <img
+                  src="/noah_profile.jpg"
+                  alt="Noah Dekeyzer"
+                  className="w-12 h-12 rounded-full object-cover shadow-md"
+                />
                 <div>
                   <p className="font-bold text-gray-900">Noah Dekeyzer</p>
                   <p className="text-sm text-[#eb5e9d] font-medium tracking-wide uppercase text-[10px]">Fondateur de Blyss</p>
@@ -1381,7 +1409,7 @@ export const ContactPage: React.FC = () => {
               </div>
               <h3 className="font-bold text-gray-900 mb-1">Email</h3>
               <p className="text-gray-500 text-sm mb-4">Notre équipe vous répond sous 24h.</p>
-              <a href="mailto:contact@blyssapp.fr" className="text-[#eb5e9d] font-semibold hover:underline">contact@blyssapp.fr</a>
+              <a href="mailto:contact@blyss.eu" className="text-[#eb5e9d] font-semibold hover:underline">contact@blyss.eu</a>
             </div>
 
             <div className="bg-white p-6 rounded-3xl shadow-lg shadow-gray-100 border border-white hover:border-pink-100 transition-colors group">
@@ -1464,7 +1492,7 @@ export const LegalPage: React.FC = () => {
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Siège social</strong> <span className="text-right">74000 Annecy</span></p>
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>SIREN</strong> <span className="text-right">NON</span></p>
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Directeur de la publication</strong> <span className="text-right">Noah Dekeyzer</span></p>
-              <p className="flex justify-between items-center pt-2"><strong>Contact</strong> <span className="text-right">contact@blyssapp.fr</span></p>
+              <p className="flex justify-between items-center pt-2"><strong>Contact</strong> <span className="text-right">contact@blyss.eu</span></p>
             </div>
           </section>
 
@@ -1539,7 +1567,7 @@ export const PrivacyPage: React.FC = () => {
               Conformément à la réglementation, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données.
             </p>
             <div className="flex items-center gap-4 pt-2">
-              <a href="mailto:contact@blyssapp.fr" className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#eb5e9d] hover:text-white hover:border-[#eb5e9d] transition-all shadow-sm">Exercer mes droits</a>
+              <a href="mailto:contact@blyss.eu" className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#eb5e9d] hover:text-white hover:border-[#eb5e9d] transition-all shadow-sm">Exercer mes droits</a>
             </div>
           </div>
         </div>
@@ -1717,20 +1745,20 @@ export const DownloadAppSection: React.FC = () => {
 
             {/* Phone 1: Clients - Left Wing */}
             <div className="transform transition-all duration-500 z-20 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-right translate-y-16 -rotate-12 lg:-translate-y-8 lg:-rotate-6 relative">
-              <PhoneMockup type="clients" imageSrc="/screen_left_v2.png" className="shadow-2xl shadow-black/50" />
+              <PhoneMockup type="clients" imageSrc="/screen_calendar_final.jpg" className="shadow-2xl shadow-black/50" />
             </div>
 
             {/* Phone 2: Dashboard - Center Hero (Prominent) */}
             <div className="transform transition-all duration-500 z-30 scale-[0.5] md:scale-110 hover:z-50 origin-bottom mb-10 md:mb-0 relative translate-y-24 lg:translate-y-0">
               <div className="relative animate-float">
                 <div className="absolute -inset-4 bg-pink-500/20 blur-3xl rounded-[60px] animate-pulse"></div>
-                <PhoneMockup type="dashboard" imageSrc="/screen_center_v2.png" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
+                <PhoneMockup type="dashboard" imageSrc="/screen_center_final.jpg" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
               </div>
             </div>
 
             {/* Phone 3: Calendar Month - Right Wing */}
             <div className="transform transition-all duration-500 z-10 md:z-10 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-left translate-y-16 rotate-12 lg:-translate-y-8 lg:rotate-6 relative">
-              <PhoneMockup type="calendar-month" imageSrc="/screen_right_v3.png" className="shadow-2xl shadow-black/50" />
+              <PhoneMockup type="calendar-month" imageSrc="/screen_clients_final.jpg" className="shadow-2xl shadow-black/50" imageClassName="object-right" />
             </div>
 
           </div>
