@@ -568,7 +568,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
 export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   return (
-    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-gradient-to-b from-pink-100/40 via-pink-50/30 to-pink-50/20">
+    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-gradient-to-b from-[#ffecf5] to-white">
       {/* Maximum Pink Atmosphere */}
       <div className="absolute top-[-15%] left-[-10%] w-[1000px] h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-pink-200/40 rounded-full blur-[140px] pointer-events-none z-0"></div>
@@ -596,7 +596,8 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
           </button>
         </div>
       </div>
-    </section>
+
+    </section >
   );
 };
 
@@ -689,7 +690,7 @@ export const AppShowcase: React.FC = () => {
   const { targetRef, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section className="py-12 md:py-24 relative overflow-hidden bg-gradient-to-b from-pink-100/20 via-pink-50/10 to-white">
+    <section className="py-12 md:py-24 relative overflow-hidden bg-gradient-to-b from-[#feeef2] via-pink-50 to-white">
       {/* Maximum Pink Atmosphere - Same as Hero */}
       <div className="absolute top-[-15%] left-[-10%] w-[500px] md:w-[1000px] h-[500px] md:h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[100px] md:blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-pink-200/40 rounded-full blur-[80px] md:blur-[140px] pointer-events-none z-0"></div>
@@ -718,7 +719,11 @@ export const AppShowcase: React.FC = () => {
         >
           {/* Static Phone Mockup with Custom Screenshot */}
           <div className="relative z-10 transform scale-90 md:scale-100 origin-center animate-float">
-            <PhoneMockup type="screenshot" className="shadow-2xl" />
+            <PhoneMockup
+              type="screenshot"
+              imageSrc="/dashboard_final_v2.jpg"
+              className="shadow-2xl scale-95 md:scale-100"
+            />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#eb5e9d]/20 blur-[100px] -z-10 rounded-full animate-pulse-slow"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-pink-300/30 blur-[60px] -z-10 rounded-full"></div>
@@ -1745,20 +1750,20 @@ export const DownloadAppSection: React.FC = () => {
 
             {/* Phone 1: Clients - Left Wing */}
             <div className="transform transition-all duration-500 z-20 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-right translate-y-16 -rotate-12 lg:-translate-y-8 lg:-rotate-6 relative">
-              <PhoneMockup type="clients" imageSrc="/screen_calendar_final.jpg" className="shadow-2xl shadow-black/50" />
+              <PhoneMockup type="clients" imageSrc="/screen_calendar_final.jpg" className="shadow-2xl shadow-black/50" imageClassName="!object-bottom scale-105 !bottom-5" />
             </div>
 
             {/* Phone 2: Dashboard - Center Hero (Prominent) */}
             <div className="transform transition-all duration-500 z-30 scale-[0.5] md:scale-110 hover:z-50 origin-bottom mb-10 md:mb-0 relative translate-y-24 lg:translate-y-0">
               <div className="relative animate-float">
                 <div className="absolute -inset-4 bg-pink-500/20 blur-3xl rounded-[60px] animate-pulse"></div>
-                <PhoneMockup type="dashboard" imageSrc="/screen_center_final.jpg" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" />
+                <PhoneMockup type="dashboard" imageSrc="/screen_center_final.jpg" className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30" imageClassName="!object-bottom scale-105 !bottom-5" />
               </div>
             </div>
 
             {/* Phone 3: Calendar Month - Right Wing */}
             <div className="transform transition-all duration-500 z-10 md:z-10 scale-[0.4] md:scale-95 opacity-90 hover:opacity-100 origin-bottom-left translate-y-16 rotate-12 lg:-translate-y-8 lg:rotate-6 relative">
-              <PhoneMockup type="calendar-month" imageSrc="/screen_clients_final.jpg" className="shadow-2xl shadow-black/50" imageClassName="object-right" />
+              <PhoneMockup type="calendar-month" imageSrc="/screen_clients_final.jpg" className="shadow-2xl shadow-black/50" imageClassName="!object-right-bottom scale-105 !bottom-5" />
             </div>
 
           </div>
