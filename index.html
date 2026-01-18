@@ -8,32 +8,33 @@
 
     <!-- Primary Meta Tags (Fallback) -->
     <title>Blyss - La plateforme dédiée aux professionnels ongulaires</title>
-    <meta name="title" content="Blyss - La plateforme dédiée aux professionnels ongulaires">
+    <meta name="title" content="Blyss - Logiciel de gestion pour prothésistes ongulaires | Réservation en ligne">
     <meta name="description"
-        content="La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires. Réservation en ligne, gestion de planning, notifications automatiques et bien plus.">
+        content="Blyss est LA plateforme de gestion tout-en-un pour prothésistes ongulaires : réservation en ligne 24/7, planning intelligent, notifications clients automatiques, paiement sécurisé. Essayez dès maintenant !">
     <meta name="keywords"
-        content="prothésiste ongulaire, gestion salon, réservation en ligne, planning beauté, logiciel onglerie">
+        content="prothésiste ongulaire, logiciel onglerie, gestion salon ongles, réservation manucure en ligne, planning prothésiste ongulaire, application nail tech, logiciel beauté, agenda nail artist, prise de rdv onglerie, gestion clientèle beauté, no-show protection onglerie">
     <meta name="author" content="Blyss">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://blyss.app">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://blyssapp.fr">
 
     <!-- Open Graph / Facebook (Fallback) -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://blyss.app">
-    <meta property="og:title" content="Blyss - La plateforme dédiée aux professionnels ongulaires">
+    <meta property="og:url" content="https://blyssapp.fr">
+    <meta property="og:title" content="Blyss - Logiciel de gestion pour prothésistes ongulaires">
     <meta property="og:description"
-        content="La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires.">
+        content="La plateforme tout-en-un pour gérer votre activité de prothésiste ongulaire : réservation, planning, notifications, paiement.">
     <meta property="og:image" content="https://i.ibb.co/1YVVTQTc/B3-B2.png">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="Blyss">
 
     <!-- Twitter Card (Fallback) -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://blyss.app">
-    <meta name="twitter:title" content="Blyss - La plateforme dédiée aux professionnels ongulaires">
+    <meta name="twitter:url" content="https://blyssapp.fr">
+    <meta name="twitter:title" content="Blyss - Logiciel de gestion pour prothésistes ongulaires">
     <meta name="twitter:description"
-        content="La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires.">
+        content="La plateforme tout-en-un pour gérer votre activité de prothésiste ongulaire.">
     <meta name="twitter:image" content="https://i.ibb.co/1YVVTQTc/B3-B2.png">
+
 
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,20 +61,26 @@
             rel="stylesheet">
     </noscript>
 
-    <!-- Tailwind CSS (async load) -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" async></script>
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
+          "@id": "https://blyssapp.fr/#organization",
           "name": "Blyss",
-          "url": "https://blyss.app",
-          "logo": "https://i.ibb.co/35940F13/B3-B.png",
-          "description": "La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires.",
+          "url": "https://blyssapp.fr",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://i.ibb.co/35940F13/B3-B.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires. Réservation en ligne, gestion de planning, notifications automatiques.",
           "founder": {
             "@type": "Person",
             "name": "Noah Dekeyzer"
@@ -90,9 +97,9 @@
           },
           "contactPoint": {
             "@type": "ContactPoint",
-            "email": "contact@blyss.eu",
+            "email": "contact@blyssapp.fr",
             "contactType": "Customer Service",
-            "availableLanguage": "French"
+            "availableLanguage": ["French"]
           },
           "sameAs": [
             "https://www.instagram.com/blyss_app/",
@@ -101,50 +108,85 @@
         },
         {
           "@type": "WebSite",
-          "name": "Blyss",
-          "url": "https://blyss.app",
-          "description": "Plateforme de gestion pour prothésistes ongulaires",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://blyss.app/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
+          "@id": "https://blyssapp.fr/#website",
+          "name": "Blyss - Logiciel gestion prothésiste ongulaire",
+          "url": "https://blyssapp.fr",
+          "description": "Application de gestion pour prothésistes ongulaires : réservation en ligne, planning, notifications clients, paiement sécurisé.",
+          "publisher": {"@id": "https://blyssapp.fr/#organization"},
+          "inLanguage": "fr-FR"
         },
         {
           "@type": "SoftwareApplication",
           "name": "Blyss",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web, iOS, Android",
+          "description": "Application de gestion pour salon d'onglerie et prothésistes ongulaires indépendantes",
           "offers": {
             "@type": "AggregateOffer",
             "lowPrice": "24.90",
             "highPrice": "39.90",
             "priceCurrency": "EUR",
-            "priceSpecification": [
-              {
-                "@type": "UnitPriceSpecification",
-                "price": "39.90",
-                "priceCurrency": "EUR",
-                "name": "Formule Start"
-              },
-              {
-                "@type": "UnitPriceSpecification",
-                "price": "29.90",
-                "priceCurrency": "EUR",
-                "name": "Formule Sérénité"
-              },
-              {
-                "@type": "UnitPriceSpecification",
-                "price": "24.90",
-                "priceCurrency": "EUR",
-                "name": "Formule Signature"
-              }
-            ]
+            "offerCount": 3
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "127"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Qu'est-ce que Blyss ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Blyss est une plateforme de gestion tout-en-un conçue exclusivement pour les prothésistes ongulaires. Elle permet de gérer les réservations en ligne, le planning, les notifications clients et les paiements de manière intuitive."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Combien coûte Blyss ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Blyss propose trois formules : Start à 39.90€/mois sans engagement, Sérénité à 29.90€/mois avec 3 mois d'engagement, et Signature à 24.90€/mois avec 12 mois d'engagement."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Blyss est-il disponible sur mobile ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, Blyss est disponible sur iOS et Android, ainsi que sur le web. Vous pouvez gérer votre salon depuis n'importe quel appareil."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Comment Blyss protège-t-il contre les no-shows ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Blyss propose un système d'acomptes automatiques et d'empreintes bancaires pour sécuriser vos rendez-vous et protéger votre chiffre d'affaires contre les annulations de dernière minute."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Blyss",
+          "image": "https://i.ibb.co/35940F13/B3-B.png",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Annecy",
+            "postalCode": "74000",
+            "addressCountry": "FR"
+          },
+          "priceRange": "€€"
         }
       ]
     }
     </script>
+
 
     <style>
         :root {
