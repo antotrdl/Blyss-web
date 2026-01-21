@@ -70,10 +70,6 @@ const BlyssLogo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
     <img
       src="https://i.ibb.co/35940F13/B3-B.png"
       alt="Blyss Logo"
-      width="40"
-      height="40"
-      loading="eager"
-      decoding="async"
       className="w-10 h-10 md:w-16 md:h-16 object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-[10deg]"
     />
   </div>
@@ -487,10 +483,6 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
             <img
               src="https://i.ibb.co/35940F13/B3-B.png"
               alt="Blyss"
-              width="32"
-              height="32"
-              loading="eager"
-              fetchPriority="high"
               className="w-8 h-8 object-contain group-hover:rotate-[10deg] transition-transform"
             />
           </button>
@@ -1807,9 +1799,6 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void }> = ({
               <img
                 src="https://i.ibb.co/35940F13/B3-B.png"
                 alt="Blyss Logo"
-                width="40"
-                height="40"
-                loading="lazy"
                 className="w-10 h-10 object-contain group-hover:rotate-[10deg] transition-transform"
               />
               <span className="font-serif-elegant italic text-2xl">Blyss</span>
