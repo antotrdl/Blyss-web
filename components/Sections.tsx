@@ -589,7 +589,6 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
           alt=""
           width="800"
           height="800"
-          fetchPriority="high"
           decoding="async"
           className="w-full h-auto"
         />

@@ -8,6 +8,10 @@
   <meta name="theme-color" content="#eb5e9d">
   <meta name="color-scheme" content="light">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
 
   <!-- Primary Meta Tags (Fallback) -->
   <title>Blyss - La plateforme dédiée aux professionnels ongulaires</title>
@@ -19,6 +23,11 @@
   <meta name="author" content="Blyss">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://blyssapp.fr">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/35940F13/B3-B.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/35940F13/B3-B.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/35940F13/B3-B.png">
 
   <!-- Open Graph / Facebook (Fallback) -->
   <meta property="og:type" content="website">
@@ -361,6 +370,30 @@
     .scroll-indicator-mask {
       mask-image: linear-gradient(to right, black 85%, transparent 100%);
       -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    }
+
+    /* Accessibility: Focus styles */
+    :focus-visible {
+      outline: 2px solid #eb5e9d;
+      outline-offset: 2px;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid #eb5e9d;
+      outline-offset: 2px;
+    }
+
+    /* Accessibility: Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 
