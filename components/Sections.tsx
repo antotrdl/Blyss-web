@@ -575,7 +575,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
 export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   return (
-    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-transparent">
+    <section className="relative pt-28 md:pt-32 pb-12 px-6 overflow-hidden bg-gradient-to-b from-[#ffecf5] to-white">
       {/* Maximum Pink Atmosphere */}
       <div className="absolute top-[-15%] left-[-10%] w-[1000px] h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-pink-200/40 rounded-full blur-[140px] pointer-events-none z-0"></div>
@@ -616,7 +616,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
 };
 
 export const Mission: React.FC = () => (
-  <section className="pt-16 pb-8 md:py-20 px-6 bg-transparent overflow-hidden relative">
+  <section className="pt-16 pb-8 md:py-20 px-6 bg-gradient-to-b from-pink-50/20 via-white to-pink-50/30 overflow-hidden relative">
     <div className="container mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
         <div className="md:w-1/2 relative z-10 order-2 md:order-1 text-center md:text-left">
@@ -649,7 +649,7 @@ export const Features: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
   return (
-    <section className="pt-4 pb-12 md:py-20 px-6 bg-transparent" id="features">
+    <section className="pt-4 pb-12 md:py-20 px-6 bg-gradient-to-b from-pink-50/30 via-white to-pink-100/20" id="features">
       <div className="container mx-auto max-w-7xl">
         {/* Desktop Grid */}
         <div className="hidden md:grid grid-cols-3 gap-12">
@@ -704,7 +704,7 @@ export const AppShowcase: React.FC = () => {
   const { targetRef, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section className="py-12 md:py-24 relative overflow-hidden bg-transparent">
+    <section className="py-12 md:py-24 relative overflow-hidden bg-gradient-to-b from-[#feeef2] via-pink-50 to-white">
       {/* Maximum Pink Atmosphere - Same as Hero */}
       <div className="absolute top-[-15%] left-[-10%] w-[500px] md:w-[1000px] h-[500px] md:h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[100px] md:blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-pink-200/40 rounded-full blur-[80px] md:blur-[140px] pointer-events-none z-0"></div>
@@ -1267,7 +1267,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onSeeDetails, onJoin }) => {
   return (
-    <section className="py-20 px-6 bg-transparent" id="pricing">
+    <section className="py-20 px-6 bg-gradient-to-b from-white via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
@@ -1411,7 +1411,7 @@ export const AboutPage: React.FC = () => {
 /* ContactPage */
 export const ContactPage: React.FC = () => {
   return (
-    <div className="pt-32 pb-20 px-6 min-h-screen bg-transparent relative overflow-hidden">
+    <div className="pt-32 pb-20 px-6 min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-transparent rounded-b-[4rem] shadow-sm z-0" />
 
@@ -1497,7 +1497,7 @@ export const ContactPage: React.FC = () => {
 /* LegalPage */
 export const LegalPage: React.FC = () => {
   return (
-    <div className="pt-32 pb-20 px-6 bg-transparent min-h-screen">
+    <div className="pt-32 pb-20 px-6 bg-gradient-to-b from-pink-100 via-pink-50 to-white min-h-screen">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Informations Juridiques</p>
