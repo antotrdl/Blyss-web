@@ -1267,7 +1267,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onSeeDetails, onJoin }) => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-white via-gray-50 to-white" id="pricing">
+    <section className="py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
@@ -1982,7 +1982,7 @@ const NewsletterModal: React.FC = () => {
 /* DownloadPage */
 export const DownloadPage: React.FC = () => {
   return (
-    <div className="bg-[#1c1c1c]">
+    <div className="bg-white">
       <NewsletterModal />
       <DownloadAppSection />
     </div>
