@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Navbar,
-  Hero,
-  Features,
-  AppShowcase,
-  PricingSection,
-  Mission,
-  Footer,
-  PricingPage,
-  DownloadPage,
-  AboutPage,
-  ContactPage,
-  LegalPage,
-  PrivacyPage,
-  TermsPage
-} from './components/Sections';
-import { SEO } from './components/SEO';
-import { BackgroundEffects } from './components/Visuals';
-
-export type PageView = 'home' | 'pricing' | 'download' | 'about' | 'contact' | 'legal' | 'privacy' | 'terms';
+import type { PageView } from './types';
+import { Navbar } from './components/layout/Navbar';
+import { Footer } from './components/layout/Footer';
+import { Hero } from './components/sections/Hero';
+import { Mission } from './components/sections/Mission';
+import { Features } from './components/sections/Features';
+import { AppShowcase } from './components/sections/AppShowcase';
+import { PricingSection } from './components/sections/PricingSection';
+import { PricingPage } from './pages/PricingPage';
+import { DownloadPage } from './pages/DownloadPage';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+import { LegalPage } from './pages/LegalPage';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { TermsPage } from './pages/TermsPage';
+import { SEO } from './components/ui/SEO';
+import { BackgroundEffects } from './components/ui/BackgroundEffects';
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
