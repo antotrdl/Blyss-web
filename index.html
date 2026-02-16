@@ -372,6 +372,14 @@
       -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
     }
 
+    /* Safe area insets for notched devices */
+    @supports (padding: env(safe-area-inset-top)) {
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+    }
+
     /* Accessibility: Focus styles */
     :focus-visible {
       outline: 2px solid #eb5e9d;

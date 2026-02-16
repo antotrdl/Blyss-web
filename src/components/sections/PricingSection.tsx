@@ -33,7 +33,7 @@ const PricingModal: React.FC<{
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
-      <div className="bg-white w-full max-w-4xl rounded-[2.5rem] p-8 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
+      <div className="bg-white w-full max-w-4xl rounded-2xl md:rounded-[2.5rem] p-5 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
         <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors" aria-label="Fermer">
           <X size={20} className="text-gray-500" />
         </button>
@@ -130,7 +130,7 @@ const SalonsModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpe
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
-      <div className="bg-white w-full max-w-4xl rounded-[2.5rem] p-8 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
+      <div className="bg-white w-full max-w-4xl rounded-2xl md:rounded-[2.5rem] p-5 md:p-12 relative z-10 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] overflow-y-auto">
         <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors" aria-label="Fermer">
           <X size={20} className="text-gray-500" />
         </button>
@@ -406,23 +406,23 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="relative flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 max-w-6xl mx-auto items-center md:items-stretch pt-20 md:pt-0 pb-12 md:pb-0 scroll-smooth px-[10vw] md:px-0 no-scrollbar scroll-px-[10vw]"
+          className="relative flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 max-w-6xl mx-auto items-center md:items-stretch pt-6 md:pt-0 pb-12 md:pb-0 scroll-smooth px-[10vw] md:px-0 no-scrollbar scroll-px-[10vw]"
         >
           {plans.map((plan, i) => (
             <div
               key={i}
               className={`relative group min-w-[80vw] md:min-w-0 snap-center transition-all duration-500 ease-out ${plan.desktopOrder || ''}
-              ${activeIndex === i ? 'scale-105 z-20 opacity-100' : 'scale-[0.85] z-10 opacity-40 blur-[0.5px]'}
+              ${activeIndex === i ? 'scale-105 z-20 opacity-100' : 'scale-[0.85] z-10 opacity-60'}
               md:scale-100 md:opacity-100 md:z-0 md:blur-none
               ${plan.isPopular ? 'md:scale-105 md:z-10' : ''}
             `}
             >
-              <div className={`flex flex-col relative min-h-[550px] md:h-full rounded-2xl md:rounded-[3rem] border transition-all duration-500
+              <div className={`flex flex-col relative min-h-[480px] md:min-h-[550px] md:h-full rounded-2xl md:rounded-[3rem] border transition-all duration-500
               ${plan.isPopular
                   ? 'bg-[#fff0f6] border-[#eb5e9d] shadow-xl md:shadow-2xl md:shadow-pink-200/50 md:hover:shadow-pink-200/80'
                   : 'bg-[#fff5f9] border-pink-100/50 md:shadow-sm md:hover:shadow-xl md:hover:shadow-pink-100/50 md:hover:border-[#eb5e9d]/30'
                 }
-              md:hover:-translate-y-2 px-5 py-10 md:p-8 items-center text-center`}
+              md:hover:-translate-y-2 px-5 py-8 md:p-8 items-center text-center`}
               >
 
                 {plan.isPopular && (
@@ -485,14 +485,26 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
             </div>
           ))}
         </div>
+
+        {/* Dot Indicators (Mobile only) */}
+        <div className="flex md:hidden items-center justify-center gap-2 mt-2">
+          {plans.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToIndex(i, true)}
+              className={`rounded-full transition-all duration-300 ${activeIndex === i ? 'w-6 h-2 bg-[#eb5e9d]' : 'w-2 h-2 bg-gray-300'}`}
+              aria-label={`Aller à l'offre ${i + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="mt-4 md:mt-12 max-w-2xl mx-auto bg-[#fff5f9] rounded-[2rem] py-3 px-6 md:p-5 border border-pink-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 hover:shadow-lg hover:shadow-pink-100 transition-all cursor-pointer group" onClick={() => setIsSalonsModalOpen(true)}>
-        <div className="flex items-center gap-4">
+      <div className="mt-4 md:mt-12 max-w-2xl mx-auto bg-[#fff5f9] rounded-[2rem] py-3 px-4 md:p-5 border border-pink-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 hover:shadow-lg hover:shadow-pink-100 transition-all cursor-pointer group" onClick={() => setIsSalonsModalOpen(true)}>
+        <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
           <div className="w-12 h-12 bg-white rounded-2xl border border-pink-100 flex items-center justify-center text-[#eb5e9d] group-hover:scale-110 transition-transform">
             <Building2 size={24} strokeWidth={1.5} />
           </div>
-          <div className="text-left">
+          <div>
             <h4 className="font-bold text-gray-900 text-base group-hover:text-[#eb5e9d] transition-colors">Salons & Franchises</h4>
             <p className="text-[13px] text-gray-500">Une solution sur-mesure.</p>
           </div>
@@ -504,7 +516,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
       </div>
 
       {/* Comparison Toggle */}
-      <div className="mt-8 md:mt-12 text-center hidden md:block">
+      <div className="mt-8 md:mt-12 text-center">
         <button
           onClick={() => setShowComparison(!showComparison)}
           className="inline-flex items-center gap-2 bg-white border border-pink-100 text-gray-500 px-5 md:px-8 py-2 md:py-3 rounded-full font-bold shadow-sm hover:shadow-md hover:text-[#eb5e9d] transition-all text-xs md:text-sm"
@@ -538,7 +550,7 @@ export { PricingCards };
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onJoin }) => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
+    <section className="py-10 md:py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
         <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
         <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>

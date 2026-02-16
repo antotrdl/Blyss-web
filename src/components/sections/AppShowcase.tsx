@@ -8,7 +8,7 @@ export const AppShowcase: React.FC = () => {
   const { targetRef, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section className="py-12 md:py-24 relative overflow-hidden bg-gradient-to-b from-[#feeef2] via-pink-50 to-white">
+    <section className="py-6 md:py-24 relative overflow-hidden bg-gradient-to-b from-[#feeef2] via-pink-50 to-white">
       {/* Maximum Pink Atmosphere - Same as Hero */}
       <div className="absolute top-[-15%] left-[-10%] w-[500px] md:w-[1000px] h-[500px] md:h-[1000px] bg-[#eb5e9d]/15 rounded-full blur-[100px] md:blur-[160px] pointer-events-none z-0"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-pink-200/40 rounded-full blur-[80px] md:blur-[140px] pointer-events-none z-0"></div>
@@ -24,7 +24,7 @@ export const AppShowcase: React.FC = () => {
               { prefix: "Votre", label: "Profil", icon: <Zap size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" },
               { prefix: "Votre", label: "Fidélité", icon: <Heart size={24} />, color: "text-[#eb5e9d]", bg: "bg-pink-50 border-pink-200" }
             ].map((item, i) => (
-              <GlassCard key={i} className={`p-6 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
+              <GlassCard key={i} className={`p-5 md:p-8 flex flex-col items-center text-center hover:bg-white transition-all border-2 ${item.bg.includes('border') ? '' : 'border-pink-50'} hover:border-pink-200 hover:shadow-xl hover:shadow-pink-100/50 group bg-white/60 active:scale-95 duration-200`}>
                 <div className={`${item.color} ${item.bg} p-3 md:p-4 rounded-2xl mb-3 md:mb-4 transition-transform duration-500 group-hover:scale-[1.2] shadow-sm border`}>{item.icon}</div>
                 <span className="font-bold text-gray-800 text-sm md:text-lg group-hover:text-[#eb5e9d] transition-colors">{item.prefix} {item.label}</span>
               </GlassCard>

@@ -14,7 +14,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
         }
       `}</style>
 
-      <section className="relative pt-28 md:pt-40 pb-20 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-[#ffecf5] via-pink-50/50 to-white">
+      <section className="relative min-h-screen md:min-h-0 pt-24 md:pt-40 pb-12 md:pb-32 px-6 overflow-hidden bg-gradient-to-b from-[#ffecf5] via-pink-50/50 to-white flex flex-col justify-center md:block">
         {/* Atmosphère rose optimisée */}
         <div className="absolute top-[-20%] left-[-10%] w-[1200px] h-[1200px] bg-[#eb5e9d]/12 rounded-full blur-[180px] pointer-events-none"></div>
         <div className="absolute bottom-[-15%] right-[-10%] w-[1000px] h-[1000px] bg-pink-200/30 rounded-full blur-[160px] pointer-events-none"></div>
@@ -61,7 +61,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
           </p>
 
           {/* CTA Principal */}
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[400ms] mb-12">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[400ms] mb-8 md:mb-12">
             <button
               onClick={onJoin}
               className="group relative bg-gradient-to-r from-[#c73a74] to-[#eb5e9d] text-white px-10 md:px-12 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg shadow-2xl shadow-pink-300/40 flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-400/50 hover:-translate-y-1 active:translate-y-0 overflow-hidden"
@@ -75,7 +75,7 @@ export const Hero: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
           </div>
 
           {/* Trust badges adaptés */}
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 animate-in fade-in duration-700 delay-500">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 animate-in fade-in duration-700 delay-500">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <svg className="w-4 h-4 text-[#eb5e9d]" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />

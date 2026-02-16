@@ -42,7 +42,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
 
   return (
     <>
-      <div className={`fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-32 opacity-0'}`}>
+      <div style={{ top: 'max(1.5rem, env(safe-area-inset-top, 1.5rem))' }} className={`fixed left-0 right-0 z-50 flex justify-center px-4 pointer-events-none transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-32 opacity-0'}`}>
         <nav className="pointer-events-auto w-full max-w-3xl bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full px-4 py-2 pl-6 flex items-center justify-between shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-300 hover:bg-white/15 hover:border-white/30">
 
           {/* Logo (Left) */}

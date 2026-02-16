@@ -5,7 +5,7 @@ export const Features: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<number>(0);
 
   return (
-    <section className="pt-4 pb-12 md:py-20 px-6 bg-gradient-to-b from-pink-50/30 via-white to-pink-100/20" id="features">
+    <section className="pt-4 pb-4 md:py-20 px-6 bg-gradient-to-b from-pink-50/30 via-white to-pink-100/20" id="features">
       <div className="container mx-auto max-w-7xl">
         {/* Desktop Grid */}
         <div className="hidden md:grid grid-cols-3 gap-12">
