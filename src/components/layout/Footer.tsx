@@ -25,7 +25,6 @@ export const Footer: React.FC<{ setCurrentPage: (page: PageView) => void; curren
                 height="40"
                 className="w-10 h-10 object-contain group-hover:rotate-[10deg] transition-transform"
               />
-              <span className={`font-serif-elegant italic text-2xl ${isDark ? 'text-white' : ''}`}>Blyss</span>
             </div>
             <p className={`text-sm leading-relaxed mb-6 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
               La première plateforme tout-en-un conçue pour l'excellence des prothésistes ongulaires.

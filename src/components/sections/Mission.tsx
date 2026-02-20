@@ -1,10 +1,18 @@
 import React from 'react';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
-export const Mission: React.FC = () => (
+export const Mission: React.FC = () => {
+  const { targetRef: textRef, isIntersecting: textVisible } = useIntersectionObserver({ threshold: 0.15 });
+  const { targetRef: imgRef, isIntersecting: imgVisible } = useIntersectionObserver({ threshold: 0.15 });
+
+  return (
   <section className="pt-8 pb-4 md:py-20 px-6 bg-gradient-to-b from-pink-50/20 via-white to-pink-50/30 overflow-hidden relative">
     <div className="container mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
-        <div className="md:w-1/2 relative z-10 order-2 md:order-1 text-center md:text-left">
+        <div
+          ref={textRef as any}
+          className={`md:w-1/2 relative z-10 order-2 md:order-1 text-center md:text-left transition-all duration-700 ease-out ${textVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+        >
           <div className="w-12 h-1 bg-[#eb5e9d] mb-6 md:mb-8 rounded-full shadow-sm mx-auto md:mx-0"></div>
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">Élevez la <br /> <span className="text-[#eb5e9d] drop-shadow-sm">beauté</span> de votre métier.</h2>
           <div className="space-y-6 md:space-y-8">
@@ -18,7 +26,10 @@ export const Mission: React.FC = () => (
             </div>
           </div>
         </div>
-        <div className="md:w-1/2 relative group order-1 md:order-2 w-full px-4 md:px-0">
+        <div
+          ref={imgRef as any}
+          className={`md:w-1/2 relative group order-1 md:order-2 w-full px-4 md:px-0 transition-all duration-700 ease-out delay-150 ${imgVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+        >
           <div className="grid grid-cols-2 gap-3 md:gap-6 relative z-10">
             <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=400&auto=format&fit=crop" width="400" height="600" loading="lazy" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl transform -rotate-2 md:-rotate-3 group-hover:rotate-0 transition-all duration-1000 ease-out" alt="Nail Studio" />
             <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=400&auto=format&fit=crop" width="400" height="600" loading="lazy" className="rounded-[1.5rem] md:rounded-[3rem] shadow-2xl mt-3 md:mt-12 transform rotate-2 md:rotate-3 group-hover:rotate-0 transition-all duration-1000 delay-100 ease-out" alt="Manicure" />
@@ -28,4 +39,5 @@ export const Mission: React.FC = () => (
       </div>
     </div>
   </section>
-);
+  );
+};

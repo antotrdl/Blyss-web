@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { Calendar, Sparkles, ShieldCheck } from 'lucide-react';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 export const Features: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<number>(0);
+  const { targetRef: sectionRef, isIntersecting: sectionVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
     <section className="pt-4 pb-4 md:py-20 px-6 bg-gradient-to-b from-pink-50/30 via-white to-pink-100/20" id="features">
       <div className="container mx-auto max-w-7xl">
         {/* Desktop Grid */}
-        <div className="hidden md:grid grid-cols-3 gap-12">
+        <div ref={sectionRef as any} className="hidden md:grid grid-cols-3 gap-12">
           {[
             { icon: <Calendar size={32} className="w-10 h-10" />, title: "Notifications Instantanées", desc: "Soyez alertée immédiatement pour chaque réservation ou annulation.", color: "bg-pink-100/80 text-[#eb5e9d]" },
             { icon: <Sparkles size={32} className="w-10 h-10" />, title: "Portfolio Photo", desc: "Liez votre profil instagram pour présenter vos réalisations.", color: "bg-pink-100/80 text-[#eb5e9d]" },
             { icon: <ShieldCheck size={32} className="w-10 h-10" />, title: "Sécurité Totale", desc: "Terminés les 'No-shows'. Vos revenus sont garantis grâce aux acomptes automatisés.", color: "bg-pink-100/80 text-[#eb5e9d]" }
           ].map((feature, i) => (
-            <div key={i} className="flex flex-col items-center text-center group cursor-default">
+            <div
+              key={i}
+              className={`flex flex-col items-center text-center group cursor-default transition-all duration-700 ease-out ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ transitionDelay: sectionVisible ? `${i * 120}ms` : '0ms' }}
+            >
               <div className={`w-20 h-20 ${feature.color} rounded-[1.75rem] flex items-center justify-center mb-6 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[15deg] shadow-sm`}>
                 {feature.icon}
               </div>

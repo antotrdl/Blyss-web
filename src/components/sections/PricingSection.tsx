@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import {
   Check,
   Sparkles,
@@ -549,11 +550,18 @@ export { PricingCards };
 
 /* PricingSection */
 export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onJoin }) => {
+  const { targetRef: headerRef, isIntersecting: headerVisible } = useIntersectionObserver({ threshold: 0.2 });
+
   return (
     <section className="py-10 md:py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
       <div className="container mx-auto max-w-7xl text-center">
-        <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
-        <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
+        <div
+          ref={headerRef as any}
+          className={`transition-all duration-700 ease-out ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
+          <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
+          <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
+        </div>
 
         <PricingCards onJoin={onJoin} />
 
