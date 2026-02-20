@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  X,
-  Mail,
-  Loader2,
-  CheckCircle2
-} from 'lucide-react';
+import { X, Mail, ArrowRight } from 'lucide-react';
 import PhoneMockup from '../components/ui/PhoneMockup';
 
 
@@ -82,7 +77,20 @@ const DownloadAppSection: React.FC = () => {
             </div>
           </div>
 
-
+          {/* Tally signup CTA */}
+          <div className="relative mb-8 md:mb-12 group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-[#eb5e9d] to-pink-400 rounded-2xl blur-md opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+            <a
+              href="https://tally.so/r/Meb8Dp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex items-center gap-3 bg-gradient-to-r from-[#eb5e9d] to-pink-500 text-white px-8 py-4 rounded-2xl font-bold text-base tracking-wide shadow-xl transition-all duration-300 group-hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <Mail size={18} className="shrink-0" />
+              <span>Rejoindre la liste d'attente</span>
+              <ArrowRight size={18} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          </div>
 
           {/* 3 Phones Display Grid - PC Layout Mirrored on Mobile */}
           <div className="flex flex-row items-end justify-center -space-x-24 md:-space-x-16 mt-8 lg:mt-20 pb-10 md:pb-0 perspective-1000 h-[280px] md:h-auto z-10 w-full overflow-visible">
@@ -127,42 +135,18 @@ const NewsletterModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(() => {
     return !sessionStorage.getItem('blyss_newsletter_seen');
   });
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState("");
-
 
   const handleClose = () => {
     setIsOpen(false);
     sessionStorage.setItem('blyss_newsletter_seen', 'true');
   };
 
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setStatus('error');
-      setErrorMessage("Veuillez entrer une adresse email valide.");
-      return;
-    }
-
-
-    setStatus('loading');
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setStatus('success');
-      setTimeout(() => {
-        handleClose();
-      }, 2000);
-    } catch (error) {
-      setStatus('error');
-      setErrorMessage("Une erreur est survenue. Veuillez réessayer.");
-    }
+  const handleTallyRedirect = () => {
+    handleClose();
+    window.open('https://tally.so/r/Meb8Dp', '_blank', 'noopener,noreferrer');
   };
 
-
   if (!isOpen) return null;
-
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -176,63 +160,22 @@ const NewsletterModal: React.FC = () => {
           <X size={20} className="text-gray-400" />
         </button>
 
-
         <div className="text-center">
           <div className="w-14 h-14 md:w-20 md:h-20 mx-auto rounded-2xl md:rounded-3xl bg-pink-900/20 flex items-center justify-center mb-3 md:mb-6 shadow-sm border border-pink-500/20">
             <Mail size={24} className="text-[#eb5e9d] md:w-10 md:h-10" />
           </div>
 
-
           <h2 className="text-xl md:text-3xl font-serif-elegant italic mb-2 md:mb-4 text-white">Prête pour <span className="text-[#eb5e9d]">l'excellence ?</span></h2>
           <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 md:mb-8">
-            Rejoins notre newsletter pour recevoir nos conseils business exclusifs et les dernières tendances Nail Art directement dans ta boîte mail.
+            Rejoins notre liste d'attente pour être parmi les premières à accéder à Blyss et recevoir nos conseils business exclusifs.
           </p>
 
-
-          {status === 'success' ? (
-            <div className="bg-green-500/10 text-green-400 p-4 rounded-2xl flex items-center justify-center gap-2 animate-in zoom-in-95 border border-green-500/20">
-              <CheckCircle2 size={20} />
-              <span className="font-bold">Inscription réussie ! ✨</span>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status === 'error') setStatus('idle');
-                  }}
-                  placeholder="ton@email.com"
-                  className={`w-full bg-white/5 border ${status === 'error' ? 'border-red-500/50' : 'border-white/10'} rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-500/20 transition-all text-white placeholder:text-gray-500`}
-                  required
-                />
-                {status === 'error' && (
-                  <p className="text-red-400 text-[10px] absolute -bottom-5 left-2 font-medium">
-                    {errorMessage}
-                  </p>
-                )}
-              </div>
-
-
-              <button
-                type="submit"
-                disabled={status === 'loading'}
-                className="w-full bg-[#eb5e9d] text-white py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold shadow-lg shadow-pink-500/30 hover:bg-pink-600 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-              >
-                {status === 'loading' ? (
-                  <>
-                    <Loader2 size={20} className="animate-spin" />
-                    <span>Traitement...</span>
-                  </>
-                ) : (
-                  <span>S'inscrire</span>
-                )}
-              </button>
-            </form>
-          )}
-
+          <button
+            onClick={handleTallyRedirect}
+            className="w-full bg-[#eb5e9d] text-white py-3.5 md:py-4 rounded-xl md:rounded-2xl font-bold shadow-lg shadow-pink-500/30 hover:bg-pink-600 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            S'inscrire
+          </button>
 
           <button
             onClick={handleClose}

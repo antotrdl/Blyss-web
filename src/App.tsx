@@ -53,8 +53,6 @@ const App: React.FC = () => {
             <Mission />
             <Features />
             <AppShowcase />
-            {/* White to Gray Transition */}
-            <div className="h-8 md:h-40 w-full bg-gradient-to-b from-white via-gray-50 to-gray-100" />
             <PricingSection
               onSeeDetails={() => setCurrentPage('pricing')}
               onJoin={() => setCurrentPage('download')}
