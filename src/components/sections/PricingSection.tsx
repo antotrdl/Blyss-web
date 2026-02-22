@@ -221,7 +221,7 @@ const ComparisonTable: React.FC = () => {
 
   return (
     <div className="mt-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 no-scrollbar">
+      <div className="overflow-x-auto pb-4 -mx-6 px-6 md:mx-0 md:px-0 no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="min-w-[800px] md:min-w-full bg-white rounded-[2rem] p-4 md:p-8 border border-gray-100 shadow-xl shadow-pink-100/20">
           {/* Header */}
           <div className="grid grid-cols-4 gap-4 mb-4 text-center pb-6 border-b border-gray-100">
@@ -273,6 +273,10 @@ const ComparisonTable: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Scroll hint - mobile only */}
+      <p className="md:hidden text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1">
+        <span>←</span> Glissez pour comparer les offres <span>→</span>
+      </p>
     </div>
   );
 };
@@ -552,18 +556,25 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
   const { targetRef: headerRef, isIntersecting: headerVisible } = useIntersectionObserver({ threshold: 0.2 });
 
   return (
-    <section className="py-10 md:py-20 px-6 bg-gradient-to-b from-gray-100 via-gray-50 to-white" id="pricing">
+    <section
+      className="py-10 md:py-20 px-6"
+      id="pricing"
+      style={{ background: 'linear-gradient(135deg, #F6EEFF 0%, #FFF0F7 50%, #FFF8FB 100%)' }}
+    >
       <div className="container mx-auto max-w-7xl text-center">
         <div
           ref={headerRef as any}
           className={`transition-all duration-700 ease-out ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
-          <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span></h2>
-          <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.</p>
+          <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6">
+            Libérez votre <span className="text-[#eb5e9d]">Potentiel.</span>
+          </h2>
+          <p className="text-gray-500 text-lg mb-8 md:mb-16 max-w-xl mx-auto font-light">
+            Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.
+          </p>
         </div>
 
         <PricingCards onJoin={onJoin} />
-
       </div>
     </section>
   );

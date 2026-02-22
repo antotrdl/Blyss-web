@@ -196,7 +196,7 @@ export const FeaturesBento: React.FC = () => {
 
   return (
     <section id="features" ref={sectionRef} style={{
-      background: 'linear-gradient(180deg, #FDFAF8 0%, #ffffff 100%)',
+      background: 'linear-gradient(135deg, #FFF8FB 0%, #FFF0F7 50%, #F6EEFF 100%)',
       padding: 'clamp(64px, 8vw, 96px) clamp(20px, 5vw, 64px)',
       position: 'relative',
       overflow: 'hidden',
@@ -247,11 +247,8 @@ export const FeaturesBento: React.FC = () => {
               Tous les outils pour gérer vos rendez-vous et vos revenus — disponibles sur votre téléphone.
             </p>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button style={{ padding: '9px 16px', borderRadius: '99px', background: '#eb5e9d', color: '#fff', fontSize: '11px', fontWeight: 700, fontFamily: 'Inter,sans-serif', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                Voir la démo →
-              </button>
-              <button style={{ padding: '9px 14px', borderRadius: '99px', background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.55)', fontSize: '11px', fontWeight: 600, fontFamily: 'Inter,sans-serif', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                Commencer dès maintenant
+              <button style={{ padding: '9px 16px', borderRadius: '99px', background: '#eb5e9d', color: '#fff', fontSize: '11px', fontWeight: 700, fontFamily: 'Inter,sans-serif', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0}}>
+                Commencer dès maintenant →
               </button>
             </div>
           </div>
@@ -261,7 +258,7 @@ export const FeaturesBento: React.FC = () => {
   <img
     src="/VisualAPP.png"
     alt="" aria-hidden="true"
-    loading="eager" decoding="async"
+    loading="lazy" decoding="async"
     style={{
       position: 'absolute',
       top: '-8%', bottom: '-8%', right: '-4%',
@@ -287,7 +284,7 @@ export const FeaturesBento: React.FC = () => {
   <img
     src="/VisualAPP.png"
     alt="" aria-hidden="true"
-    loading="eager" decoding="async"
+    loading="lazy" decoding="async"
     style={{
       width: '100%',
       height: '130%',                      // ← dépasse du wrapper → déborde en bas

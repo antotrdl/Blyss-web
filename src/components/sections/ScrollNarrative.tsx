@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
+// import React, { useCallBack } from 'react'
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
@@ -7,7 +8,7 @@ const ease = (t: number): number => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 const easeOut = (t: number): number => 1 - (1 - t) * (1 - t);
 
 const BG_DARK = '#0D0D0D';
-const BG_CREAM = '#F7F4F0';
+const BG_CREAM = 'linear-gradient(135deg, #FFF8FB 0%, #FFF0F7 50%, #F6EEFF 100%)';
 
 interface IconDef {
   emoji: string; bg: string; textColor: string;
@@ -90,26 +91,26 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
   const hoverMul = useRef<number[]>(Array(N).fill(1.0));
   const hoverTarget = useRef<number[]>(Array(N).fill(1.0));
 
-  const scrollToEnd = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const scrollH = container.offsetHeight - window.innerHeight;
-    const containerTop = container.getBoundingClientRect().top + window.scrollY;
-    const target = containerTop + scrollH;
-    const start = window.scrollY;
-    const distance = target - start;
-    const duration = 2200;
-    let startTime: number | null = null;
-    const easeInOut = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    const step = (ts: number) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      window.scrollTo(0, start + distance * easeInOut(progress));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, []);
+  // const scrollToEnd = useCallback(() => {
+  //   const container = containerRef.current;
+  //   if (!container) return;
+  //   const scrollH = container.offsetHeight - window.innerHeight;
+  //   const containerTop = container.getBoundingClientRect().top + window.scrollY;
+  //   const target = containerTop + scrollH;
+  //   const start = window.scrollY;
+  //   const distance = target - start;
+  //   const duration = 2200;
+  //   let startTime: number | null = null;
+  //   const easeInOut = (t: number) =>
+  //     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  //   const step = (ts: number) => {
+  //     if (!startTime) startTime = ts;
+  //     const progress = Math.min((ts - startTime) / duration, 1);
+  //     window.scrollTo(0, start + distance * easeInOut(progress));
+  //     if (progress < 1) requestAnimationFrame(step);
+  //   };
+  //   requestAnimationFrame(step);
+  // }, []);
 
   useEffect(() => {
     let rafId: number;
@@ -299,7 +300,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         >
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 14px', borderRadius: '999px', background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '12px' }}>
             <span style={{ fontSize: '10px', color: '#eb5e9d' }}>✦</span>
-            <span style={{ fontSize: '11px', fontWeight: 600, color: '#444', letterSpacing: '0.04em', fontFamily: "'Inter', sans-serif" }}>Rejoignez-nous</span>
+            <span style={{ fontSize: '11px', fontWeight: 600, color: '#444', letterSpacing: '0.04em', fontFamily: "'Inter', sans-serif" }}>Bientôt disponible</span>
           </div>
 
           <h1 className="font-serif-elegant italic"
@@ -427,7 +428,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         ))}
 
         {/* ── Scroll cue ────────────────────────────────────────────────────── */}
-        <div
+        {/* <div
           ref={scrollCueRef}
           onClick={scrollToEnd}
           style={{ position: 'absolute', bottom: 'calc(20px + env(safe-area-inset-bottom, 0px))', left: '50%', transform: 'translateX(-50%)', zIndex: 25, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', opacity: 0.75, cursor: 'pointer', userSelect: 'none' }}
@@ -436,7 +437,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
           <svg width="16" height="10" viewBox="0 0 16 10" fill="none" style={{ animation: 'scrollCue 2.2s ease-in-out infinite' }}>
             <path d="M1 1l7 7 7-7" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </div>
+        </div> */}
 
       </div>
 

@@ -99,7 +99,7 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
               </button>
 
               {/* Mobile Dropdown Menu */}
-              <div className={`absolute top-full right-0 mt-2 w-64 bg-white rounded-[1.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100 p-3 flex flex-col gap-2 transform transition-all duration-300 ease-out origin-top-right z-[100] ${isMobileMenuOpen ? 'scale-100 opacity-100 translate-y-0 pointer-events-auto' : 'scale-95 opacity-0 -translate-y-2 pointer-events-none'}`}>
+              <div className={`absolute top-full right-0 mt-2 w-[min(256px,calc(100vw-2rem))] bg-white rounded-[1.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-gray-100 p-3 flex flex-col gap-2 transform transition-all duration-300 ease-out origin-top-right z-[100] ${isMobileMenuOpen ? 'scale-100 opacity-100 translate-y-0 pointer-events-auto' : 'scale-95 opacity-0 -translate-y-2 pointer-events-none'}`}>
 
                 <button
                   onClick={() => handleNav('home')}

@@ -8,7 +8,7 @@ const DownloadAppSection: React.FC = () => {
   return (
     <section className="py-0 md:py-20 bg-[#1c1c1c] text-white overflow-hidden relative min-h-screen flex flex-col justify-center">
       <div className="container mx-auto max-w-7xl px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-16 pt-32 md:pt-0">
+        <div className="flex flex-col items-center text-center mb-16 pt-24 md:pt-0">
           <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
             Gérez votre salon <br /><span className="text-[#eb5e9d]">depuis votre smartphone.</span>
           </h2>
@@ -92,8 +92,21 @@ const DownloadAppSection: React.FC = () => {
             </a>
           </div>
 
-          {/* 3 Phones Display Grid - PC Layout Mirrored on Mobile */}
-          <div className="flex flex-row items-end justify-center -space-x-24 md:-space-x-16 mt-8 lg:mt-20 pb-10 md:pb-0 perspective-1000 h-[280px] md:h-auto z-10 w-full overflow-visible">
+          {/* Mobile: Single centered phone */}
+          <div className="flex md:hidden justify-center mt-6 pb-10 overflow-visible">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-pink-500/20 blur-3xl rounded-[60px] animate-pulse"></div>
+              <PhoneMockup
+                type="dashboard"
+                imageSrc="/profile_screen.jpg"
+                className="shadow-[0_0_80px_rgba(235,94,157,0.4)] border border-[#eb5e9d]/30"
+                imageClassName="!object-bottom scale-105 !bottom-5"
+              />
+            </div>
+          </div>
+
+          {/* 3 Phones Display Grid - Desktop only */}
+          <div className="hidden md:flex flex-row items-end justify-center md:-space-x-16 mt-8 lg:mt-20 pb-10 md:pb-0 perspective-1000 md:h-auto z-10 w-full overflow-visible">
 
 
             {/* Phone 1: Clients - Left Wing */}
