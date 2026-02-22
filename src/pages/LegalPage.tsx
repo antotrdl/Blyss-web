@@ -19,9 +19,9 @@ export const LegalPage: React.FC = () => {
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Dénomination sociale</strong> <span className="text-right">Noah Dekeyzer</span></p>
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Forme juridique</strong> <span className="text-right">(Entrepreneur Individuel - EI)</span></p>
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Siège social</strong> <span className="text-right">74000 Annecy</span></p>
-              <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>SIREN</strong> <span className="text-right">NON</span></p>
+              <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>SIRET</strong> <span className="text-right">934 901 976 00035</span></p>
               <p className="flex justify-between items-center border-b border-gray-50 pb-2"><strong>Directeur de la publication</strong> <span className="text-right">Noah Dekeyzer</span></p>
-              <p className="flex justify-between items-center pt-2"><strong>Contact</strong> <span className="text-right">contact@blyss.eu</span></p>
+              <p className="flex justify-between items-center pt-2"><strong>Contact</strong> <span className="text-right">contact@blyssapp.fr</span></p>
             </div>
           </section>
 

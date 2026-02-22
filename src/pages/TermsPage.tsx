@@ -15,15 +15,29 @@ export const TermsPage: React.FC = () => {
     },
     {
       title: "Article 1 - Objet et Description des Services",
-      content: "Blyss propose une plateforme SaaS (Software as a Service) dédiée à la gestion d'activité pour les prothésistes ongulaires. Les services incluent notamment : la gestion de planning et des rendez-vous, la réservation en ligne 24/7 pour les clients, les notifications push automatiques, le tableau de bord statistiques, le module de gestion financière (selon formule), le portfolio photo intégré (selon formule), les rappels automatiques pré et post-prestation (selon formule), l'encaissement en ligne sécurisé (selon formule), et la visibilité premium dans les résultats de recherche (selon formule). Les fonctionnalités détaillées de chaque formule sont disponibles sur notre site web et peuvent évoluer pour améliorer l'expérience utilisateur."
+      content: "Blyss propose une plateforme SaaS (Software as a Service) et une application dédiée à la gestion d'activité pour les prothésistes ongulaires. Les services incluent notamment : la gestion de planning et des rendez-vous, la réservation en ligne 24/7 pour les clients, les notifications push automatiques, le tableau de bord statistiques, le module de gestion financière (selon formule), le portfolio photo instagram intégré (selon formule), les rappels automatiques pré et post-prestation (selon formule), l'encaissement en ligne sécurisé (selon formule), et la visibilité premium dans les résultats de recherche (selon formule). Les fonctionnalités détaillées de chaque formule sont disponibles sur notre site web et peuvent évoluer pour améliorer l'expérience utilisateur."
     },
     {
       title: "Article 2 - Tarifs et Modalités de Paiement",
-      content: "Les prix de nos abonnements sont indiqués en euros toutes taxes comprises (TTC) et incluent la TVA au taux en vigueur. Trois formules sont proposées : Start à 39,90€/mois sans engagement, Sérénité à 29,90€/mois avec engagement de 3 mois, et Signature à 24,90€/mois avec engagement de 12 mois. Blyss se réserve le droit de modifier ses tarifs à tout moment, étant entendu que le prix applicable est celui en vigueur au jour de la souscription. En cas d'augmentation tarifaire, les clients existants seront informés au moins 30 jours avant l'application du nouveau tarif. Le paiement s'effectue par prélèvement automatique mensuel via carte bancaire, par l'intermédiaire de notre prestataire de paiement sécurisé (Stripe). Le client garantit qu'il dispose des autorisations nécessaires pour utiliser le mode de paiement choisi. En cas de défaut de paiement, l'accès aux services pourra être suspendu après mise en demeure restée sans effet pendant 8 jours."
+      content: "Les prix de nos abonnements sont indiqués en euros toutes taxes comprises (TTC) et incluent la TVA au taux en vigueur. Trois formules sont proposées : Start à 69,90€/mois sans engagement, Sérénité à 54,90€/mois avec engagement de 3 mois, et Signature à 49,90€/mois avec engagement de 12 mois. Blyss se réserve le droit de modifier ses tarifs à tout moment, étant entendu que le prix applicable est celui en vigueur au jour de la souscription. En cas d'augmentation tarifaire, les clients existants seront informés au moins 30 jours avant l'application du nouveau tarif. Le paiement s'effectue par prélèvement automatique mensuel via carte bancaire, par l'intermédiaire de notre prestataire de paiement sécurisé (Stripe). Le client garantit qu'il dispose des autorisations nécessaires pour utiliser le mode de paiement choisi. En cas de défaut de paiement, l'accès aux services pourra être suspendu après mise en demeure restée sans effet pendant 8 jours."
     },
     {
-      title: "Article 3 - Souscription et Activation",
-      content: "La souscription s'effectue directement en ligne via notre site web ou application mobile. Le client doit remplir le formulaire d'inscription en fournissant des informations exactes et à jour. L'accès aux services premium est activé immédiatement après confirmation du paiement et validation des informations fournies. Un email de confirmation contenant les identifiants de connexion et un récapitulatif de l'abonnement est envoyé systématiquement à l'adresse email renseignée. Le client s'engage à conserver la confidentialité de ses identifiants et à informer immédiatement Blyss de toute utilisation non autorisée de son compte. La durée de l'abonnement court à compter de la date d'activation et se renouvelle automatiquement par tacite reconduction pour des périodes identiques, sauf résiliation dans les conditions prévues à l'article 5."
+      title: "Article 3 - Frais de Transaction et Encaissement en Ligne",
+      content: `La fonctionnalité d'encaissement en ligne est disponible exclusivement dans la formule Signature. Elle est opérée par notre prestataire de paiement tiers Stripe (Stripe Payments Europe Ltd, 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Irlande), soumis à la réglementation européenne des services de paiement (DSP2).
+
+Frais appliqués par Stripe sur chaque transaction encaissée par le client professionnel :
+— Carte bancaire européenne standard : 1,5 % + 0,25 € par transaction
+— Carte bancaire européenne premium (ex. Visa Gold, Mastercard World) : 1,9 % + 0,25 € par transaction
+— Carte internationale (hors Europe) : 3,25 % + 0,25 € par transaction
+— Virement instantané vers compte bancaire : 1 % du montant (minimum 0,50 €)
+
+Ces frais sont prélevés directement par Stripe sur chaque transaction et déduits du montant reversé au client professionnel. Blyss n'est pas partie à cette relation financière et ne perçoit aucune commission sur les transactions réalisées entre le client professionnel et sa clientèle.
+
+Exemple illustratif : pour une prestation encaissée en ligne à 50 € par carte européenne standard, les frais Stripe s'élèvent à 1,00 € (soit 1,5 % × 50 €) + 0,25 €, soit 1,25 € au total. Le client professionnel reçoit 48,75 € net sur son compte bancaire.
+
+Les fonds encaissés sont reversés sur le compte bancaire du client professionnel selon le calendrier de virement défini dans son espace Stripe, généralement sous 2 à 7 jours ouvrés après la transaction, hors virement instantané. Blyss ne saurait être tenue responsable des délais de virement imputables à Stripe ou aux établissements bancaires concernés.
+
+Le client professionnel est seul responsable de la conformité de son activité d'encaissement aux obligations fiscales et légales en vigueur (déclaration des revenus, TVA le cas échéant). La grille tarifaire de Stripe est susceptible d'évoluer ; les conditions applicables sont celles publiées sur stripe.com/fr/pricing à la date de chaque transaction.`
     },
     {
       title: "Article 4 - Droit de Rétractation",
@@ -31,7 +45,7 @@ export const TermsPage: React.FC = () => {
     },
     {
       title: "Article 5 - Résiliation",
-      content: "Pour les abonnements sans engagement (formule Start), le client peut résilier à tout moment depuis son espace personnel ou par email à contact@blyssapp.fr. La résiliation prend effet à la fin de la période de facturation en cours, sans remboursement au prorata. Pour les abonnements avec engagement (formules Sérénité et Signature), la résiliation anticipée avant la fin de la période d'engagement n'est possible qu'en cas de manquement grave de Blyss à ses obligations contractuelles. À l'issue de la période d'engagement, l'abonnement se poursuit sans engagement et peut être résilié à tout moment dans les mêmes conditions que la formule Start. Blyss se réserve le droit de résilier l'abonnement en cas de manquement du client à ses obligations, notamment en cas de non-paiement, d'utilisation frauduleuse ou contraire aux présentes CGV, après mise en demeure restée sans effet pendant 15 jours."
+      content: "Pour les abonnements sans engagement (formule Start), le client peut résilier à tout moment depuis son espace personnel ou par email à contact@blyssapp.fr. La résiliation prend effet à la fin de la période de facturation en cours, sans remboursement au prorata. Pour les abonnements avec engagement (formules Sérénité et Signature), la résiliation anticipée avant la fin de la période d'engagement n'est possible qu'en cas de manquement grave de Blyss à ses obligations contractuelles ou situation exceptionnelle. À l'issue de la période d'engagement, l'abonnement se poursuit sans engagement et peut être résilié à tout moment dans les mêmes conditions que la formule Start. Blyss se réserve le droit de résilier l'abonnement en cas de manquement du client à ses obligations, notamment en cas de non-paiement, d'utilisation frauduleuse ou contraire aux présentes CGV, après mise en demeure restée sans effet pendant 15 jours."
     },
     {
       title: "Article 6 - Responsabilité et Garanties",
@@ -39,7 +53,7 @@ export const TermsPage: React.FC = () => {
     },
     {
       title: "Article 7 - Données Personnelles",
-      content: "Blyss s'engage à traiter les données personnelles de ses clients conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés. Les données collectées sont nécessaires à la fourniture des services et à la gestion de la relation client. Elles sont conservées pendant la durée de l'abonnement et 3 ans après sa résiliation à des fins de preuve. Le client dispose d'un droit d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition sur ses données personnelles, qu'il peut exercer à tout moment en contactant privacy@blyss.app. Pour plus d'informations, nous vous invitons à consulter notre Politique de Confidentialité disponible sur notre site web."
+      content: "Blyss s'engage à traiter les données personnelles de ses clients conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés. Les données collectées sont nécessaires à la fourniture des services et à la gestion de la relation client. Elles sont conservées pendant la durée de l'abonnement et 3 ans après sa résiliation à des fins de preuve. Le client dispose d'un droit d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition sur ses données personnelles, qu'il peut exercer à tout moment en contactant contact@blyssapp.fr Pour plus d'informations, nous vous invitons à consulter notre Politique de Confidentialité disponible sur notre site web."
     },
     {
       title: "Article 8 - Propriété Intellectuelle",
@@ -86,7 +100,7 @@ export const TermsPage: React.FC = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-xs text-gray-400">Dernière mise à jour : Janvier 2026</p>
+          <p className="text-xs text-gray-400">Dernière mise à jour : Février 2026</p>
         </div>
       </div>
     </div>

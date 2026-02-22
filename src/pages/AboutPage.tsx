@@ -37,7 +37,7 @@ export const AboutPage: React.FC = () => {
                 Blyss est née d'un constat simple mais puissant : les professionnels de la beauté, et en particulier les prothésistes ongulaires, sont des artistes qui méritent des outils à la hauteur de leur talent.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Fondée en 2025 à Annecy, notre aventure a commencé avec une mission claire : révolutionner la gestion des salons grâce à une technologie invisible, fluide et élégante, préservant l'humain au cœur de chaque échange.
+                Fondée en 2025 à Annecy, notre aventure a commencé avec une mission claire : révolutionner l'organisation grâce à une technologie invisible, fluide et élégante, préservant l'humain au cœur de chaque échange.
               </p>
             </div>
           </div>
@@ -86,7 +86,7 @@ export const AboutPage: React.FC = () => {
                 Une idée née de la <span className="text-[#eb5e9d]">proximité</span>
               </h3>
               <p className="text-gray-700 text-lg md:text-xl leading-relaxed font-light italic">
-                "C'est en observant mes proches passionnés par leur métier, en partageant leurs défis et leurs réussites quotidiennes, que l'évidence s'est imposée. Blyss n'est pas seulement un outil, c'est le fruit de ces moments partagés et d'une volonté de simplifier votre art. Aujourd'hui, ce produit prend vie pour donner à chacun la liberté de créer sereinement."
+                "C'est en observant mes proches passionnés par leur métier, en partageant leurs défis et leurs réussites quotidiennes, que l'évidence s'est imposée. Blyss n'est pas seulement un outil, c'est le fruit de ces moments partagés et d'une volonté de simplifier votre art. Aujourd'hui, ce produit prend vie pour donner à chacun(e) la liberté de créer sereinement."
               </p>
               <div className="mt-8 flex items-center gap-4">
                 <img
@@ -111,7 +111,7 @@ export const AboutPage: React.FC = () => {
           <div className="relative z-10">
             <h2 className="text-2xl md:text-4xl font-serif-elegant italic mb-4 text-gray-900">Notre Mission</h2>
             <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light mb-6">
-              "Libérer les entrepreneurs de la beauté des contraintes administratives pour qu'ils puissent se concentrer sur l'essentiel : sublimer leurs clients."
+              "Libérer les entrepreneurs de la beauté des contraintes administratives pour qu'ils puissent se concentrer sur l'essentiel : sublimer leurs clientes."
             </p>
             <div className="w-16 h-1 bg-[#eb5e9d] mx-auto rounded-full" />
           </div>

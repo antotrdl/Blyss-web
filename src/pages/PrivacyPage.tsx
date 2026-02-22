@@ -40,7 +40,7 @@ export const PrivacyPage: React.FC = () => {
               Conformément à la réglementation, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données.
             </p>
             <div className="flex items-center gap-4 pt-2">
-              <a href="mailto:contact@blyss.eu" className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#eb5e9d] hover:text-white hover:border-[#eb5e9d] transition-all shadow-sm">Exercer mes droits</a>
+              <a href="mailto:contact@blyssapp.fr" className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#eb5e9d] hover:text-white hover:border-[#eb5e9d] transition-all shadow-sm">Exercer mes droits</a>
             </div>
           </div>
         </div>

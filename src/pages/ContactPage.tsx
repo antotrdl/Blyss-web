@@ -55,6 +55,7 @@ export const ContactPage: React.FC = () => {
               <div className="flex gap-4">
                 <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all" aria-label="Instagram"><Instagram size={16} /></a>
                 <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all" aria-label="LinkedIn"><Linkedin size={16} /></a>
+                <a href="https://www.tiktok.com/@blyss_app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all" aria-label="Tiktok"></a>
               </div>
             </div>
           </div>
