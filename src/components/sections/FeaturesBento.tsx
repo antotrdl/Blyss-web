@@ -257,7 +257,7 @@ export const FeaturesBento: React.FC = () => {
 
           {/* Image — absolute sur desktop, block sur mobile/tablet */}
           <img
-            src="public/VisualAPP.png"
+            src="/VisualAPP.png"
             alt="" aria-hidden="true"
             loading="eager" decoding="async"
             style={isDesktop ? {

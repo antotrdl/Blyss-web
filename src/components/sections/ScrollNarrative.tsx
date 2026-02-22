@@ -1,48 +1,64 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
-const lerp  = (a: number, b: number, t: number) => a + (b - a) * t;
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
-const rng   = (v: number, lo: number, hi: number) => clamp((v - lo) / (hi - lo), 0, 1);
-const ease    = (t: number): number => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+const rng = (v: number, lo: number, hi: number) => clamp((v - lo) / (hi - lo), 0, 1);
+const ease = (t: number): number => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 const easeOut = (t: number): number => 1 - (1 - t) * (1 - t);
 
-const BG_DARK  = '#0D0D0D';
+const BG_DARK = '#0D0D0D';
 const BG_CREAM = '#F7F4F0';
 
 interface IconDef {
   emoji: string; bg: string; textColor: string;
-  heroLeft: number; heroTop: number;     // desktop positions (%)
-  mobileLeft: number; mobileTop: number; // mobile : 2 colonnes, sous le CTA
+  heroLeft: number; heroTop: number;
+  mobileLeft: number; mobileTop: number;
   phase: number; floatAmp: number; floatDur: number; rotAmp: number;
   absStart: number;
 }
 
 const ICONS: IconDef[] = [
-  { emoji: '📅', bg: '#E0EDFE', textColor: '#1A5CB8',
-    heroLeft: 20, heroTop: 30,  mobileLeft: 26, mobileTop: 26,
-    phase: 0.00, floatAmp: 5, floatDur: 6.8, rotAmp: 2.5, absStart: 0.70 },
-  { emoji: '🔔', bg: '#FEF0DC', textColor: '#B45309',
-    heroLeft: 12, heroTop: 52,  mobileLeft:  9, mobileTop: 40,
-    phase: 1.15, floatAmp: 5, floatDur: 5.8, rotAmp: 3.0, absStart: 0.72 },
-  { emoji: '💳', bg: '#DFFBEA', textColor: '#15803D',
-    heroLeft: 22, heroTop: 68,  mobileLeft:  9, mobileTop: 54,
-    phase: 2.30, floatAmp: 5, floatDur: 7.4, rotAmp: 2.5, absStart: 0.74 },
-  { emoji: '👤', bg: '#F0E8FF', textColor: '#6B21A8',
-    heroLeft: 36, heroTop: 78,  mobileLeft: 26, mobileTop: 68,
-    phase: 0.70, floatAmp: 5, floatDur: 6.2, rotAmp: 2.5, absStart: 0.76 },
+  {
+    emoji: '📅', bg: '#E0EDFE', textColor: '#1A5CB8',
+    heroLeft: 20, heroTop: 30, mobileLeft: 26, mobileTop: 26,
+    phase: 0.00, floatAmp: 5, floatDur: 6.8, rotAmp: 2.5, absStart: 0.70
+  },
+  {
+    emoji: '🔔', bg: '#FEF0DC', textColor: '#B45309',
+    heroLeft: 12, heroTop: 52, mobileLeft: 9, mobileTop: 40,
+    phase: 1.15, floatAmp: 5, floatDur: 5.8, rotAmp: 3.0, absStart: 0.72
+  },
+  {
+    emoji: '💳', bg: '#DFFBEA', textColor: '#15803D',
+    heroLeft: 22, heroTop: 68, mobileLeft: 9, mobileTop: 54,
+    phase: 2.30, floatAmp: 5, floatDur: 7.4, rotAmp: 2.5, absStart: 0.74
+  },
+  {
+    emoji: '👤', bg: '#F0E8FF', textColor: '#6B21A8',
+    heroLeft: 36, heroTop: 78, mobileLeft: 26, mobileTop: 68,
+    phase: 0.70, floatAmp: 5, floatDur: 6.2, rotAmp: 2.5, absStart: 0.76
+  },
 
-  { emoji: '📊', bg: '#DDFBF4', textColor: '#0F766E',
-    heroLeft: 82, heroTop: 22,  mobileLeft: 74, mobileTop: 26,
-    phase: 1.90, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.78 },
-  { emoji: '✉️', bg: '#FEFCE8', textColor: '#92400E',
-    heroLeft: 86, heroTop: 44,  mobileLeft: 91, mobileTop: 40,
-    phase: 3.10, floatAmp: 5, floatDur: 5.4, rotAmp: 3.0, absStart: 0.80 },
-  { emoji: '⭐', bg: '#FEE8F4', textColor: '#9D174D',
-    heroLeft: 80, heroTop: 63,  mobileLeft: 91, mobileTop: 54,
-    phase: 0.45, floatAmp: 5, floatDur: 6.4, rotAmp: 2.5, absStart: 0.82 },
-  { emoji: '🕐', bg: '#EBF0FF', textColor: '#4338CA',
-    heroLeft: 64, heroTop: 78,  mobileLeft: 74, mobileTop: 68,
-    phase: 2.60, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.84 },
+  {
+    emoji: '📊', bg: '#DDFBF4', textColor: '#0F766E',
+    heroLeft: 82, heroTop: 22, mobileLeft: 74, mobileTop: 26,
+    phase: 1.90, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.78
+  },
+  {
+    emoji: '✉️', bg: '#FEFCE8', textColor: '#92400E',
+    heroLeft: 86, heroTop: 44, mobileLeft: 91, mobileTop: 40,
+    phase: 3.10, floatAmp: 5, floatDur: 5.4, rotAmp: 3.0, absStart: 0.80
+  },
+  {
+    emoji: '⭐', bg: '#FEE8F4', textColor: '#9D174D',
+    heroLeft: 80, heroTop: 63, mobileLeft: 91, mobileTop: 54,
+    phase: 0.45, floatAmp: 5, floatDur: 6.4, rotAmp: 2.5, absStart: 0.82
+  },
+  {
+    emoji: '🕐', bg: '#EBF0FF', textColor: '#4338CA',
+    heroLeft: 64, heroTop: 78, mobileLeft: 74, mobileTop: 68,
+    phase: 2.60, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.84
+  },
 ];
 
 
@@ -60,29 +76,29 @@ const SideBtn: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
 
 export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const bgDarkRef    = useRef<HTMLDivElement>(null);
-  const heroRef      = useRef<HTMLDivElement>(null);
-  const s2LeftRef    = useRef<HTMLDivElement>(null);
-  const s2RightRef   = useRef<HTMLDivElement>(null);
-  const s2ToggleRef  = useRef<HTMLDivElement>(null);
-  const phoneRef     = useRef<HTMLDivElement>(null);
-  const overlayRef   = useRef<HTMLDivElement>(null);
-  const glowRef      = useRef<HTMLDivElement>(null);
-  const bentoRef     = useRef<HTMLDivElement>(null);
+  const bgDarkRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const s2LeftRef = useRef<HTMLDivElement>(null);
+  const s2RightRef = useRef<HTMLDivElement>(null);
+  const s2ToggleRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const bentoRef = useRef<HTMLDivElement>(null);
   const scrollCueRef = useRef<HTMLDivElement>(null);
-  const iconRefs     = useRef<Array<HTMLDivElement | null>>(Array(N).fill(null));
-  const hoverMul     = useRef<number[]>(Array(N).fill(1.0));
-  const hoverTarget  = useRef<number[]>(Array(N).fill(1.0));
+  const iconRefs = useRef<Array<HTMLDivElement | null>>(Array(N).fill(null));
+  const hoverMul = useRef<number[]>(Array(N).fill(1.0));
+  const hoverTarget = useRef<number[]>(Array(N).fill(1.0));
 
   const scrollToEnd = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
-    const scrollH      = container.offsetHeight - window.innerHeight;
+    const scrollH = container.offsetHeight - window.innerHeight;
     const containerTop = container.getBoundingClientRect().top + window.scrollY;
-    const target       = containerTop + scrollH;
-    const start        = window.scrollY;
-    const distance     = target - start;
-    const duration     = 2200;
+    const target = containerTop + scrollH;
+    const start = window.scrollY;
+    const distance = target - start;
+    const duration = 2200;
     let startTime: number | null = null;
     const easeInOut = (t: number) =>
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -108,12 +124,12 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       const container = containerRef.current;
       if (!container) { rafId = requestAnimationFrame(frame); return; }
 
-      const rect    = container.getBoundingClientRect();
+      const rect = container.getBoundingClientRect();
       const scrollH = container.offsetHeight - window.innerHeight;
-      const p       = clamp(-rect.top / Math.max(scrollH, 1), 0, 1);
-      const t       = ts / 1000;
-      const vw      = window.innerWidth;
-      const vh      = window.innerHeight;
+      const p = clamp(-rect.top / Math.max(scrollH, 1), 0, 1);
+      const t = ts / 1000;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
       const isMobile = vw < 640;
       const isTablet = vw >= 640 && vw < 1024;
 
@@ -121,23 +137,22 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       const heroOffY = isMobile
         ? vh * 0.56 + 100
         : isTablet ? vh * 0.38 + 140
-        : vh * 0.42 + 200;
-      const scaleP      = ease(rng(p, 0.45, 0.82));
-      const phoneOffY   = lerp(heroOffY, 0, scaleP);
+          : vh * 0.42 + 200;
+      const scaleP = ease(rng(p, 0.45, 0.82));
+      const phoneOffY = lerp(heroOffY, 0, scaleP);
       const phoneScFrom = isMobile ? 1.0 : isTablet ? 1.1 : 1.3;
-      const phoneSc     = lerp(phoneScFrom, 1.0, scaleP);
-      const phoneW_css  = isMobile
+      const phoneSc = lerp(phoneScFrom, 1.0, scaleP);
+      const phoneW_css = isMobile
         ? Math.min(vw * 0.80, 290)
         : isTablet ? Math.min(vw * 0.44, 270) : 280;
-      // Léger tilt 3D qui se corrige en montant → effet "phone surgit de l'horizon"
-      const phoneTiltX  = lerp(isMobile ? 0 : 7, 0, scaleP);
+      const phoneTiltX = lerp(isMobile ? 0 : 7, 0, scaleP);
 
       if (phoneRef.current) {
         const phoneW = phoneRef.current.offsetWidth;
         const phoneH = phoneRef.current.offsetHeight;
-        phoneRef.current.style.width     = `${phoneW_css}px`;
-        phoneRef.current.style.left      = `${vw / 2 - phoneW / 2}px`;
-        phoneRef.current.style.top       = `${vh / 2 - phoneH / 2}px`;
+        phoneRef.current.style.width = `${phoneW_css}px`;
+        phoneRef.current.style.left = `${vw / 2 - phoneW / 2}px`;
+        phoneRef.current.style.top = `${vh / 2 - phoneH / 2}px`;
         phoneRef.current.style.transform = `translateY(${phoneOffY}px) scale(${phoneSc}) perspective(900px) rotateX(${phoneTiltX.toFixed(2)}deg)`;
       }
 
@@ -149,11 +164,11 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
 
       // ── Glow (pulse lors des absorptions) ────────────────────────────────
       if (glowRef.current) {
-        const gp         = ease(rng(p, 0.45, 0.80));
+        const gp = ease(rng(p, 0.45, 0.80));
         const absProgress = ICONS.reduce((s, icon) => s + easeOut(rng(p, icon.absStart, 0.97)), 0) / N;
-        const glowVal    = clamp(lerp(0.10, 0.50, gp) + absProgress * 0.12, 0, 0.62);
-        const alpha      = glowVal.toFixed(3);
-        glowRef.current.style.opacity    = String(glowVal);
+        const glowVal = clamp(lerp(0.10, 0.50, gp) + absProgress * 0.12, 0, 0.62);
+        const alpha = glowVal.toFixed(3);
+        glowRef.current.style.opacity = String(glowVal);
         glowRef.current.style.background = `radial-gradient(circle, rgba(235,94,157,${alpha}) 0%, transparent 68%)`;
       }
 
@@ -162,26 +177,26 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         overlayRef.current.style.opacity = String(1 - ease(rng(p, 0.70, 0.94)));
       if (bentoRef.current) {
         const bp = ease(rng(p, 0.74, 0.96));
-        bentoRef.current.style.opacity   = String(bp);
+        bentoRef.current.style.opacity = String(bp);
         bentoRef.current.style.transform = `scale(${lerp(0.96, 1.0, bp)})`;
       }
 
       // ── Hero (fade + translate + léger scale-down) ────────────────────────
       if (heroRef.current) {
         const hp = ease(rng(p, 0.12, 0.38));
-        heroRef.current.style.opacity   = String(1 - hp);
+        heroRef.current.style.opacity = String(1 - hp);
         heroRef.current.style.transform = `translateY(${lerp(0, -56, hp)}px) scale(${lerp(1, 0.94, hp)})`;
       }
 
       // ── S2 textes (slide X + léger slide Y) ──────────────────────────────
       if (s2LeftRef.current) {
         const lp = ease(rng(p, 0.38, 0.68));
-        s2LeftRef.current.style.opacity   = String(lp);
+        s2LeftRef.current.style.opacity = String(lp);
         s2LeftRef.current.style.transform = `translateY(calc(-50% + ${lerp(14, 0, lp)}px)) translateX(${lerp(-44, 0, lp)}px)`;
       }
       if (s2RightRef.current) {
         const rp = ease(rng(p, 0.52, 0.80));
-        s2RightRef.current.style.opacity   = String(rp);
+        s2RightRef.current.style.opacity = String(rp);
         s2RightRef.current.style.transform = `translateY(calc(-50% + ${lerp(14, 0, rp)}px)) translateX(${lerp(44, 0, rp)}px)`;
       }
       if (s2ToggleRef.current)
@@ -189,10 +204,10 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
 
       // ── Scroll cue : adapte sa couleur au fond ────────────────────────────
       if (scrollCueRef.current) {
-        const bgDark  = ease(rng(p, 0.26, 0.50));
+        const bgDark = ease(rng(p, 0.26, 0.50));
         const cueFade = 1 - ease(rng(p, 0.50, 0.70));
         const r = Math.round(lerp(0, 235, bgDark));
-        const g = Math.round(lerp(0, 94,  bgDark));
+        const g = Math.round(lerp(0, 94, bgDark));
         const b = Math.round(lerp(0, 157, bgDark));
         const clr = `rgb(${r},${g},${b})`;
         scrollCueRef.current.style.opacity = String(cueFade * 0.75);
@@ -202,10 +217,9 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       }
 
       // ── Icons ─────────────────────────────────────────────────────────────
-      const floatDecay   = ease(rng(p, 0.55, 0.78));
+      const floatDecay = ease(rng(p, 0.55, 0.78));
       const phoneCenterX = vw * 0.5;
       const phoneCenterY = vh * 0.5 + phoneOffY;
-      // Ease cubique pour l'accélération du spin
       const easeIn3 = (t: number) => t * t * t;
 
       ICONS.forEach((icon, i) => {
@@ -213,8 +227,8 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         if (!el) return;
 
         const floatAmp = lerp(icon.floatAmp, 0, floatDecay);
-        const freq     = (2 * Math.PI) / icon.floatDur;
-        const ap       = easeOut(rng(p, icon.absStart, 0.97));
+        const freq = (2 * Math.PI) / icon.floatDur;
+        const ap = easeOut(rng(p, icon.absStart, 0.97));
         hoverMul.current[i] = lerp(hoverMul.current[i], ap > 0.05 ? 1.0 : hoverTarget.current[i], 0.18);
 
         const alive = 1 - ap;
@@ -222,20 +236,16 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         const fX = Math.cos(t * freq * 0.73 + icon.phase) * floatAmp * 0.32 * alive;
 
         const rawLeft = (isMobile ? icon.mobileLeft : icon.heroLeft) / 100;
-        const rawTop  = (isMobile ? icon.mobileTop  : icon.heroTop)  / 100;
+        const rawTop = (isMobile ? icon.mobileTop : icon.heroTop) / 100;
 
-        // ── Pre-pull gravitationnel : dérive vers le phone avant absorption ──
-        // Active entre la fin du float et le début de l'absorption
         const prePull = ease(rng(p, 0.62, icon.absStart));
-        const gravX   = (phoneCenterX - rawLeft * vw) * 0.14 * prePull;
-        const gravY   = (phoneCenterY - rawTop  * vh) * 0.14 * prePull;
+        const gravX = (phoneCenterX - rawLeft * vw) * 0.14 * prePull;
+        const gravY = (phoneCenterY - rawTop * vh) * 0.14 * prePull;
 
-        // ── Float rotation (calme) ───────────────────────────────────────
         const floatRot = Math.sin(t * freq * 0.85 + icon.phase + 1.2) * icon.rotAmp * alive;
 
-        // ── Spin cubique : accélération dramatique à l'absorption ────────
-        const spinDir  = i % 2 === 0 ? 1 : -1;
-        const spinDeg  = easeIn3(ap) * 500 * spinDir;
+        const spinDir = i % 2 === 0 ? 1 : -1;
+        const spinDeg = easeIn3(ap) * 500 * spinDir;
         const totalRot = floatRot + spinDeg;
 
         // ── Scale : gonfle à ap=0.20, puis s'effondre ────────────────────
@@ -251,18 +261,18 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         const opacity = ap < 0.58 ? 1 : lerp(1, 0, ease((ap - 0.58) / 0.42));
 
         // ── Arc parabolique sur tous les écrans ──────────────────────────
-        const arcAmp  = isMobile ? -55 : -28;
+        const arcAmp = isMobile ? -55 : -28;
         const arcOffY = Math.sin(ap * Math.PI) * arcAmp;
 
         // ── Motion blur sur tous les écrans ─────────────────────────────
         const blurMax = isMobile ? 8 : 3.5;
-        const blurPx  = (ease(rng(ap, 0.35, 1.0)) * blurMax).toFixed(1);
+        const blurPx = (ease(rng(ap, 0.35, 1.0)) * blurMax).toFixed(1);
 
-        el.style.left          = `${lerp(rawLeft * vw + fX + gravX, phoneCenterX, ap)}px`;
-        el.style.top           = `${lerp(rawTop * vh + fY + gravY, phoneCenterY, ap) + arcOffY}px`;
-        el.style.transform     = `translate(-50%,-50%) scale(${sc.toFixed(4)}) rotate(${totalRot.toFixed(2)}deg)`;
-        el.style.opacity       = String(opacity.toFixed(4));
-        el.style.filter        = `blur(${blurPx}px)`;
+        el.style.left = `${lerp(rawLeft * vw + fX + gravX, phoneCenterX, ap)}px`;
+        el.style.top = `${lerp(rawTop * vh + fY + gravY, phoneCenterY, ap) + arcOffY}px`;
+        el.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(4)}) rotate(${totalRot.toFixed(2)}deg)`;
+        el.style.opacity = String(opacity.toFixed(4));
+        el.style.filter = `blur(${blurPx}px)`;
         el.style.pointerEvents = ap > 0.05 ? 'none' : 'auto';
       });
 
@@ -375,15 +385,15 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
               <div ref={bentoRef} style={{ position: 'absolute', inset: 0, opacity: 0, zIndex: 44, transformOrigin: 'center center', backgroundImage: "url('/dashboard_final_v2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat' }} />
 
               <div ref={overlayRef} style={{ position: 'absolute', inset: 0, zIndex: 45, pointerEvents: 'none', overflow: 'hidden' }}>
-                <img src="public/onboard.jpg" alt="" aria-hidden="true" loading="eager" decoding="async"
+                <img src="/onboard.jpg" alt="" aria-hidden="true" loading="eager" decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
               </div>
             </div>
 
-            <SideBtn style={{ left: '-2px', top: '11%',  height: '3.5%', borderRadius: '2px 0 0 2px' }} />
-            <SideBtn style={{ left: '-2px', top: '18%',  height: '6%',   borderRadius: '2px 0 0 2px' }} />
-            <SideBtn style={{ left: '-2px', top: '26%',  height: '6%',   borderRadius: '2px 0 0 2px' }} />
-            <SideBtn style={{ right: '-2px', top: '21%', height: '10%',  borderRadius: '0 2px 2px 0' }} />
+            <SideBtn style={{ left: '-2px', top: '11%', height: '3.5%', borderRadius: '2px 0 0 2px' }} />
+            <SideBtn style={{ left: '-2px', top: '18%', height: '6%', borderRadius: '2px 0 0 2px' }} />
+            <SideBtn style={{ left: '-2px', top: '26%', height: '6%', borderRadius: '2px 0 0 2px' }} />
+            <SideBtn style={{ right: '-2px', top: '21%', height: '10%', borderRadius: '0 2px 2px 0' }} />
             <SideBtn style={{ right: '-2px', top: '39%', height: '4.5%', borderRadius: '0 2px 2px 0' }} />
           </div>
         </div>
@@ -400,17 +410,17 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
           >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
               <div style={{
-  width: 'clamp(54px, 14vw, 64px)',
-  height: 'clamp(54px, 14vw, 64px)',
-  borderRadius: 'clamp(14px, 2vw, 17px)',
+                width: 'clamp(54px, 14vw, 64px)',
+                height: 'clamp(54px, 14vw, 64px)',
+                borderRadius: 'clamp(14px, 2vw, 17px)',
                 background: icon.bg,
                 border: '1px solid rgba(255,255,255,0.90)',
                 boxShadow: '0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 userSelect: 'none',
               }}>
-                  <span style={{ fontSize: 'clamp(25px, 7vw, 30px)', lineHeight: 1 }}>
-{icon.emoji}</span>
+                <span style={{ fontSize: 'clamp(25px, 7vw, 30px)', lineHeight: 1 }}>
+                  {icon.emoji}</span>
               </div>
             </div>
           </div>
