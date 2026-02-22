@@ -222,10 +222,11 @@ export const FeaturesBento: React.FC = () => {
 
         {/* ① Hero */}
         <Card visible={visible} delay={0} style={{
-          ...grid.hero,
-          background: '#111', border: '1px solid rgba(255,255,255,0.06)',
-          padding: 0, flexDirection: isDesktop ? 'row' : 'column',
-        }}>
+  ...grid.hero,
+  background: '#111', border: '1px solid rgba(255,255,255,0.06)',
+  padding: 0,
+  flexDirection: isDesktop ? 'row' : 'column-reverse',  // ← 'column' → 'column-reverse'
+}}>
           {/* Texte */}
           <div style={{
             width: isDesktop ? '50%' : '100%',
@@ -255,25 +256,55 @@ export const FeaturesBento: React.FC = () => {
             </div>
           </div>
 
-          {/* Image — absolute sur desktop, block sur mobile/tablet */}
-          <img
-            src="/VisualAPP.png"
-            alt="" aria-hidden="true"
-            loading="eager" decoding="async"
-            style={isDesktop ? {
-              position: 'absolute',
-              top: '-8%', bottom: '-8%', right: '-4%',
-              width: '64%', height: '116%',
-              objectFit: 'cover', objectPosition: 'center center',
-              zIndex: 1, pointerEvents: 'none',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 22%)',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 22%)',
-            } : {
-              width: '100%', height: isMobile ? '180px' : '220px',
-              objectFit: 'cover', objectPosition: 'center top',
-              display: 'block', flexShrink: 0,
-            }}
-          />
+          {/* Image — absolute sur desktop, stylée sur mobile/tablet */}
+{isDesktop ? (
+  <img
+    src="/VisualAPP.png"
+    alt="" aria-hidden="true"
+    loading="eager" decoding="async"
+    style={{
+      position: 'absolute',
+      top: '-8%', bottom: '-8%', right: '-4%',
+      width: '64%', height: '116%',
+      objectFit: 'cover', objectPosition: 'center center',
+      zIndex: 1, pointerEvents: 'none',
+      WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 22%)',
+      maskImage: 'linear-gradient(to right, transparent 0%, black 22%)',
+    }}
+  />
+) : (
+  // ── Wrapper mobile : image + fade bas + coins arrondis haut ──
+  <div style={{
+  position: 'relative',
+  width: '100%',
+  height: isMobile ? '260px' : '300px',   // ← hauteur du wrapper (zone visible)
+  flexShrink: 0,
+  overflow: 'hidden',
+  borderRadius: 'inherit',
+  borderBottomLeftRadius: 0,
+  borderBottomRightRadius: 0,
+}}>
+  <img
+    src="/VisualAPP.png"
+    alt="" aria-hidden="true"
+    loading="eager" decoding="async"
+    style={{
+      width: '100%',
+      height: '130%',                      // ← dépasse du wrapper → déborde en bas
+      objectFit: 'cover',
+      objectPosition: 'center 15%',
+      display: 'block',
+    }}
+  />
+  {/* Fondu bas — plus prononcé pour couvrir le débordement */}
+  <div style={{
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(to bottom, transparent 30%, #111 90%)',  // ← démarre plus tôt
+    pointerEvents: 'none',
+  }} />
+
+  </div>
+)}
         </Card>
 
         {/* ② Agenda + Stats */}
