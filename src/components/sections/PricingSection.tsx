@@ -216,8 +216,7 @@ const ComparisonTable: React.FC = () => {
     { label: "Rappels & messages automatiques	", start: minusIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Module finance : Statistiques & Facturation", start: minusIcon, serenite: checkIcon, signature: checkIcon },
     { label: "Suivis post-prestation", start: minusIcon, serenite: minusIcon, signature: checkIcon },
-    { label: "Visibilité premium", start: minusIcon, serenite: minusIcon, signature: checkIcon },
-    { label: "Encaissement en ligne*", start: minusIcon, serenite: minusIcon, signature: checkIcon },
+    { label: "Encaissement en ligne (bientôt disponible)", start: minusIcon, serenite: minusIcon, signature: checkIcon },
   ];
 
   return (

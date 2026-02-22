@@ -22,7 +22,6 @@ export const Navbar: React.FC<{ scrolled: boolean; currentPage: PageView; setCur
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      // Hide if scrolling down AND past 50px. Show if scrolling up.
       if (currentScrollY > 50 && currentScrollY > lastScrollY.current) {
         setIsVisible(false);
       } else {

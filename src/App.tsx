@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import type { PageView } from './types';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { Hero } from './components/sections/Hero';
-import { Mission } from './components/sections/Mission';
-import { Features } from './components/sections/Features';
-import { AppShowcase } from './components/sections/AppShowcase';
+import { ScrollNarrative } from './components/sections/ScrollNarrative';
+import { FeaturesBento } from './components/sections/FeaturesBento';
 import { PricingSection } from './components/sections/PricingSection';
 import { PricingPage } from './pages/PricingPage';
 import { DownloadPage } from './pages/DownloadPage';
@@ -49,10 +47,8 @@ const App: React.FC = () => {
               title="Blyss - La plateforme dédiée aux professionnels ongulaires"
               description="La plateforme de gestion intuitive conçue exclusivement pour les prothésistes ongulaires. Réservation en ligne, gestion de planning, notifications automatiques et bien plus."
             />
-            <Hero onJoin={() => setCurrentPage('download')} />
-            <Mission />
-            <Features />
-            <AppShowcase />
+            <ScrollNarrative onJoin={() => setCurrentPage('download')} />
+            <FeaturesBento />
             <PricingSection
               onSeeDetails={() => setCurrentPage('pricing')}
               onJoin={() => setCurrentPage('download')}

@@ -17,7 +17,7 @@ export const ChevronLeft = ({ size, className }: { size: number, className?: str
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m15 18-6-6 6-6" /></svg>
 );
 
-const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-day' | 'clients' | 'overview' | 'screenshot'; className?: string; imageSrc?: string; imageClassName?: string }> = ({ type, className = "", imageSrc, imageClassName = "" }) => {
+const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-day' | 'clients' | 'overview' | 'screenshot' | 'feature-icons'; className?: string; imageSrc?: string; imageClassName?: string }> = ({ type, className = "", imageSrc, imageClassName = "" }) => {
   const isCustomScreen = !!imageSrc;
 
   return (
@@ -64,8 +64,8 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
 
           {/* Content Area */}
           <div
-            className={`flex-1 relative ${type === 'screenshot' || isCustomScreen ? 'h-full w-full overflow-hidden' : 'overflow-y-auto px-4 md:px-5 pt-2 pb-24 space-y-4 md:space-y-5 [&::-webkit-scrollbar]:hidden'}`}
-            style={type !== 'screenshot' && !isCustomScreen ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
+            className={`flex-1 relative ${type === 'screenshot' || isCustomScreen || type === 'feature-icons' ? 'h-full w-full overflow-hidden' : 'overflow-y-auto px-4 md:px-5 pt-2 pb-24 space-y-4 md:space-y-5 [&::-webkit-scrollbar]:hidden'}`}
+            style={type !== 'screenshot' && !isCustomScreen && type !== 'feature-icons' ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
           >
             {isCustomScreen ? (
               <img
@@ -324,7 +324,7 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
           </div>
 
           {/* Bottom Nav */}
-          {type !== 'screenshot' && !isCustomScreen && (
+          {type !== 'screenshot' && !isCustomScreen && type !== 'feature-icons' && (
             <div className="absolute bottom-6 left-4 right-4 h-16 bg-white rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] flex justify-around items-center px-4 z-40">
               <div className={`p-2 transition-all cursor-pointer ${type === 'dashboard' ? 'text-[#eb5e9d] bg-pink-50 rounded-full' : 'text-gray-400'}`}>
                 <Home size={24} strokeWidth={type === 'dashboard' ? 2.5 : 2} />
@@ -342,7 +342,7 @@ const PhoneMockup: React.FC<{ type: 'dashboard' | 'calendar-month' | 'calendar-d
           )}
 
           {/* Home Indicator */}
-          {type !== 'screenshot' && !isCustomScreen && (
+          {type !== 'screenshot' && !isCustomScreen && type !== 'feature-icons' && (
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-black/80 rounded-full z-50 pointer-events-none"></div>
           )}
 
