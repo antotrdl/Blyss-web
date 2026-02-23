@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
 
   return {
+    appType: 'spa',
     plugins: [react(), tailwindcss()],
     // Remplace process.env.API_KEY par sa valeur lors du build pour le client
     define: {

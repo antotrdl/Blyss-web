@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Hero: React.FC<{ onJoin?: () => void }> = ({ }) => {
+export const Hero: React.FC = () => {
   return (
     <>
       <style>{`

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import React, { useCallBack } from 'react'
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -75,7 +76,8 @@ const SideBtn: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
   }} />
 );
 
-export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) => {
+export const ScrollNarrative: React.FC = () => {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const bgDarkRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -83,6 +85,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
   const s2RightRef = useRef<HTMLDivElement>(null);
   const s2ToggleRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLDivElement>(null);
+  const phoneFrameRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const bentoRef = useRef<HTMLDivElement>(null);
@@ -114,6 +117,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
 
   useEffect(() => {
     let rafId: number;
+    let prevTs = 0;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
       if (heroRef.current) heroRef.current.style.opacity = '1';
@@ -121,16 +125,26 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       return;
     }
 
+    // Cache viewport size — mise à jour seulement au resize (évite layout-read chaque frame)
+    let cachedVW = window.innerWidth;
+    let cachedVH = window.innerHeight;
+    const onResize = () => { cachedVW = window.innerWidth; cachedVH = window.innerHeight; };
+    window.addEventListener('resize', onResize, { passive: true });
+
     const frame = (ts: number) => {
+      // Delta time normalisé sur 60fps pour lerp indépendant du taux de rafraîchissement
+      const dt = prevTs > 0 ? clamp((ts - prevTs) / 16.667, 0.1, 3) : 1;
+      prevTs = ts;
+
       const container = containerRef.current;
       if (!container) { rafId = requestAnimationFrame(frame); return; }
 
       const rect = container.getBoundingClientRect();
-      const scrollH = container.offsetHeight - window.innerHeight;
+      const vw = cachedVW;
+      const vh = cachedVH;
+      const scrollH = container.offsetHeight - vh;
       const p = clamp(-rect.top / Math.max(scrollH, 1), 0, 1);
       const t = ts / 1000;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
       const isMobile = vw < 640;
       const isTablet = vw >= 640 && vw < 1024;
 
@@ -149,10 +163,9 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       const phoneTiltX = lerp(isMobile ? 0 : 7, 0, scaleP);
 
       if (phoneRef.current) {
-        const phoneW = phoneRef.current.offsetWidth;
         const phoneH = phoneRef.current.offsetHeight;
         phoneRef.current.style.width = `${phoneW_css}px`;
-        phoneRef.current.style.left = `${vw / 2 - phoneW / 2}px`;
+        phoneRef.current.style.left = `${vw / 2 - phoneW_css / 2}px`;
         phoneRef.current.style.top = `${vh / 2 - phoneH / 2}px`;
         phoneRef.current.style.transform = `translateY(${phoneOffY}px) scale(${phoneSc}) perspective(900px) rotateX(${phoneTiltX.toFixed(2)}deg)`;
       }
@@ -161,6 +174,21 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       if (bgDarkRef.current) {
         const r = lerp(0, 150, ease(rng(p, 0.26, 0.62)));
         bgDarkRef.current.style.clipPath = `circle(${r.toFixed(2)}% at 50% 50%)`;
+      }
+
+      // ── Phone frame : noir sur fond clair, argent sur fond sombre ─────────
+      if (phoneFrameRef.current) {
+        const fp = ease(rng(p, 0.26, 0.62));
+        const darkStops  = [0x11, 0x2C, 0x1E, 0x0A];
+        const lightStops = [0xE8, 0x9E, 0xBE, 0xD8];
+        const stops = darkStops.map((d, i) => {
+          const v = Math.round(lerp(d, lightStops[i], fp));
+          return `rgb(${v},${v},${v})`;
+        });
+        phoneFrameRef.current.style.background = `linear-gradient(160deg, ${stops[0]} 0%, ${stops[1]} 35%, ${stops[2]} 65%, ${stops[3]} 100%)`;
+        const insetA  = lerp(0.12, 0.55, fp).toFixed(2);
+        const shadowA = lerp(0.65, 0.45, fp).toFixed(2);
+        phoneFrameRef.current.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,${insetA}), inset 0 0 0 2.5px rgba(0,0,0,0.10), 0 50px 120px rgba(0,0,0,${shadowA}), 0 14px 30px rgba(0,0,0,0.25)`;
       }
 
       // ── Glow (pulse lors des absorptions) ────────────────────────────────
@@ -174,12 +202,13 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       }
 
       // ── Overlay / Bento ───────────────────────────────────────────────────
+      // Le bento (dashboard) est toujours à opacity 1 en dessous.
+      // L'overlay (onboard) se retire seul — pas de fondu croisé.
       if (overlayRef.current)
-        overlayRef.current.style.opacity = String(1 - ease(rng(p, 0.70, 0.94)));
+        overlayRef.current.style.opacity = String(1 - ease(rng(p, 0.80, 0.94)));
       if (bentoRef.current) {
-        const bp = ease(rng(p, 0.74, 0.96));
-        bentoRef.current.style.opacity = String(bp);
-        bentoRef.current.style.transform = `scale(${lerp(0.96, 1.0, bp)})`;
+        bentoRef.current.style.opacity = '1';
+        bentoRef.current.style.transform = 'scale(1)';
       }
 
       // ── Hero (fade + translate + léger scale-down) ────────────────────────
@@ -221,7 +250,11 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
       const floatDecay = ease(rng(p, 0.55, 0.78));
       const phoneCenterX = vw * 0.5;
       const phoneCenterY = vh * 0.5 + phoneOffY;
-      const easeIn3 = (t: number) => t * t * t;
+      const easeIn3 = (x: number) => x * x * x;
+      // Demi-taille pour centrage via transform (évite le reflow de left/top)
+      const iconHalf = clamp(vw * 0.14, 54, 64) / 2;
+      // Pas de blur sur PC (évite la création de 8 couches GPU distinctes → artifacts Windows/Mac)
+      const blurMax = isMobile ? 4 : 0;
 
       ICONS.forEach((icon, i) => {
         const el = iconRefs.current[i];
@@ -230,7 +263,9 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         const floatAmp = lerp(icon.floatAmp, 0, floatDecay);
         const freq = (2 * Math.PI) / icon.floatDur;
         const ap = easeOut(rng(p, icon.absStart, 0.97));
-        hoverMul.current[i] = lerp(hoverMul.current[i], ap > 0.05 ? 1.0 : hoverTarget.current[i], 0.18);
+        // Lerp indépendant du framerate (0.82 = 1-0.18, identique à 60fps)
+        const lerpFactor = 1 - Math.pow(0.82, dt);
+        hoverMul.current[i] = lerp(hoverMul.current[i], ap > 0.05 ? 1.0 : hoverTarget.current[i], lerpFactor);
 
         const alive = 1 - ap;
         const fY = Math.sin(t * freq + icon.phase) * floatAmp * alive;
@@ -261,19 +296,25 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
         // ── Opacity : stable, puis disparition rapide avec ease ──────────
         const opacity = ap < 0.58 ? 1 : lerp(1, 0, ease((ap - 0.58) / 0.42));
 
-        // ── Arc parabolique sur tous les écrans ──────────────────────────
-        const arcAmp = isMobile ? -55 : -28;
+        // ── Arc parabolique ───────────────────────────────────────────────
+        const arcAmp = isMobile ? -45 : -28;
         const arcOffY = Math.sin(ap * Math.PI) * arcAmp;
 
-        // ── Motion blur sur tous les écrans ─────────────────────────────
-        const blurMax = isMobile ? 8 : 3.5;
-        const blurPx = (ease(rng(ap, 0.35, 1.0)) * blurMax).toFixed(1);
+        // ── Positionnement pur transform (pas de left/top → zéro reflow) ─
+        const finalX = lerp(rawLeft * vw + fX + gravX, phoneCenterX, ap) - iconHalf;
+        const finalY = lerp(rawTop * vh + fY + gravY, phoneCenterY, ap) + arcOffY - iconHalf;
 
-        el.style.left = `${lerp(rawLeft * vw + fX + gravX, phoneCenterX, ap)}px`;
-        el.style.top = `${lerp(rawTop * vh + fY + gravY, phoneCenterY, ap) + arcOffY}px`;
-        el.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(4)}) rotate(${totalRot.toFixed(2)}deg)`;
-        el.style.opacity = String(opacity.toFixed(4));
-        el.style.filter = `blur(${blurPx}px)`;
+        el.style.transform = `translate(${finalX.toFixed(1)}px,${finalY.toFixed(1)}px) scale(${sc.toFixed(3)}) rotate(${totalRot.toFixed(1)}deg)`;
+        el.style.opacity = opacity.toFixed(4);
+
+        // ── Blur uniquement sur mobile et seulement si significatif ──────
+        if (blurMax > 0) {
+          const blurVal = ease(rng(ap, 0.35, 1.0)) * blurMax;
+          el.style.filter = blurVal > 0.3 ? `blur(${blurVal.toFixed(1)}px)` : 'none';
+        } else if (el.style.filter !== 'none') {
+          el.style.filter = 'none';
+        }
+
         el.style.pointerEvents = ap > 0.05 ? 'none' : 'auto';
       });
 
@@ -281,12 +322,15 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
     };
 
     rafId = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(rafId);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   return (
     <div ref={containerRef} style={{ height: '300vh', position: 'relative' }}>
-      <div className="sticky top-0 overflow-hidden" style={{ height: '100dvh' }}>
+      <div className="sticky top-0 overflow-hidden scroll-narrative-sticky" style={{ height: '100dvh' }}>
 
         <div className="absolute inset-0" style={{ background: BG_CREAM }} />
         <div ref={bgDarkRef} className="absolute inset-0"
@@ -304,7 +348,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
           </div>
 
           <h1 className="font-serif-elegant italic"
-            style={{ fontSize: 'clamp(3rem, 9.5vw, 5.2rem)', lineHeight: 1.07, letterSpacing: '-0.022em', color: '#111', marginBottom: 'clamp(6px, 1dvh, 10px)', maxWidth: '820px' }}>
+            style={{ fontSize: 'clamp(2.2rem, 9.5vw, 5.2rem)', lineHeight: 1.07, letterSpacing: '-0.022em', color: '#111', marginBottom: 'clamp(6px, 1dvh, 10px)', maxWidth: '820px', width: '100%' }}>
             <span style={{ display: 'block' }}>Vos clientes.</span>
             <span style={{ display: 'block' }}>Votre planning.</span>
             <span style={{ display: 'block', color: '#eb5e9d' }}>Votre liberté.</span>
@@ -315,7 +359,7 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
           </p>
 
           <button
-            onClick={onJoin}
+            onClick={() => navigate('/telecharger')}
             style={{ pointerEvents: 'auto', display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '13px 28px', borderRadius: '999px', background: '#eb5e9d', color: '#fff', fontSize: '0.88rem', fontWeight: 600, letterSpacing: '0.01em', fontFamily: "'Inter', sans-serif", border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(235,94,157,0.38)', transition: 'transform 200ms, box-shadow 200ms' }}
             onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 22px rgba(235,94,157,0.46)'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 14px rgba(235,94,157,0.38)'; }}
@@ -363,14 +407,14 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
 
           <div ref={glowRef} style={{ position: 'absolute', inset: '-80px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(235,94,157,0.1) 0%, transparent 68%)', filter: 'blur(24px)', opacity: 0.10, zIndex: -1, pointerEvents: 'none' }} />
 
-          <div style={{
+          <div ref={phoneFrameRef} style={{
             position: 'relative', width: '100%', aspectRatio: '393 / 852',
             borderRadius: 'clamp(34px, 12.5vw, 50px)',
-            background: 'linear-gradient(160deg, #E8E8E8 0%, #9E9E9E 35%, #BEBEBE 65%, #D8D8D8 100%)',
+            background: 'linear-gradient(160deg, #111111 0%, #2C2C2C 35%, #1E1E1E 65%, #0A0A0A 100%)',
             boxShadow: `
-              inset 0 0 0 1px rgba(255,255,255,0.55),
+              inset 0 0 0 1px rgba(255,255,255,0.12),
               inset 0 0 0 2.5px rgba(0,0,0,0.10),
-              0 50px 120px rgba(0,0,0,0.45),
+              0 50px 120px rgba(0,0,0,0.65),
               0 14px 30px rgba(0,0,0,0.25)
             `,
           }}>
@@ -383,10 +427,10 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
             }}>
               <div style={{ position: 'absolute', top: '2%', left: '50%', transform: 'translateX(-50%)', width: '30%', height: '2.8%', background: '#000', borderRadius: '999px', zIndex: 100, boxShadow: '0 0 0 1px rgba(80,80,80,0.35)' }} />
 
-              <div ref={bentoRef} style={{ position: 'absolute', inset: 0, opacity: 0, zIndex: 44, transformOrigin: 'center center', backgroundImage: "url('/dashboard_final_v2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat' }} />
+              <div ref={bentoRef} style={{ position: 'absolute', inset: 0, opacity: 1, zIndex: 44, transformOrigin: 'center center', backgroundImage: "url('/dashboard_final_v2.jpg')", backgroundSize: 'cover', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat' }} />
 
               <div ref={overlayRef} style={{ position: 'absolute', inset: 0, zIndex: 45, pointerEvents: 'none', overflow: 'hidden' }}>
-                <img src="/onboard.jpg" alt="" aria-hidden="true" loading="eager" decoding="async"
+                <img src="/onboard.png" alt="" aria-hidden="true" loading="eager" decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
               </div>
             </div>
@@ -405,11 +449,12 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
             key={i}
             ref={el => { iconRefs.current[i] = el; }}
             className="absolute z-30 will-change-transform"
-            style={{ left: `${icon.heroLeft}%`, top: `${icon.heroTop}%`, transform: 'translate(-50%,-50%)', cursor: 'default', pointerEvents: 'auto' }}
+            // left:0 top:0 — positionnement géré entièrement par transform translate (zéro reflow)
+            style={{ left: 0, top: 0, opacity: 0, cursor: 'default', pointerEvents: 'auto' }}
             onMouseEnter={() => { hoverTarget.current[i] = 1.08; }}
             onMouseLeave={() => { hoverTarget.current[i] = 1.0; }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{
                 width: 'clamp(54px, 14vw, 64px)',
                 height: 'clamp(54px, 14vw, 64px)',
@@ -419,8 +464,9 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
                 boxShadow: '0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 userSelect: 'none',
+                contain: 'layout style',
               }}>
-                <span style={{ fontSize: 'clamp(25px, 7vw, 30px)', lineHeight: 1 }}>
+                <span className="icon-emoji" style={{ fontSize: 'clamp(25px, 7vw, 30px)', lineHeight: 1 }}>
                   {icon.emoji}</span>
               </div>
             </div>
@@ -454,6 +500,16 @@ export const ScrollNarrative: React.FC<{ onJoin?: () => void }> = ({ onJoin }) =
           .hero-narrative {
             padding-top: max(clamp(72px, 12dvh, 130px), calc(clamp(52px, 9dvh, 110px) + env(safe-area-inset-top, 0px)));
           }
+        }
+        /* Isolation du paint sur le container sticky — évite les repaints cascade */
+        .scroll-narrative-sticky {
+          contain: paint layout;
+          isolation: isolate;
+        }
+        /* Rendu emoji stable cross-plateforme (évite les layouts emoji différents Win/Mac) */
+        .icon-emoji {
+          font-variant-emoji: emoji;
+          -webkit-font-smoothing: antialiased;
         }
         @keyframes scrollCue {
           0%, 100% { transform: translateY(0);   opacity: 1; }

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import {
-  Mail,
-  User,
-  MessageCircle,
-  Instagram,
-  Linkedin,
-  Send
-} from 'lucide-react';
+import { Mail, User, MessageCircle, Instagram, Linkedin, Send } from 'lucide-react';
+
+const TikTokIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.17 8.17 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" />
+  </svg>
+);
 
 export const ContactPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -22,12 +21,11 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="pt-32 pb-20 px-6 min-h-screen bg-gradient-to-b from-pink-100 via-pink-50 to-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-transparent rounded-b-[4rem] shadow-sm z-0" />
-
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">Parlons de <span className="text-[#eb5e9d]">Vous</span></h1>
+          <h1 className="text-4xl md:text-6xl font-serif-elegant italic mb-6">
+            Parlons de <span className="text-[#eb5e9d]">Vous</span>
+          </h1>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
             Une question, un partenariat ou simplement envie de discuter ?<br />
             Notre équipe est à votre écoute.
@@ -35,7 +33,7 @@ export const ContactPage: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-          {/* Contact Info Cards */}
+          {/* Infos de contact */}
           <div className="lg:col-span-1 space-y-6 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
             <div className="bg-white p-6 rounded-3xl shadow-lg shadow-gray-100 border border-white hover:border-pink-100 transition-colors group">
               <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-[#eb5e9d] mb-4 group-hover:scale-110 transition-transform">
@@ -43,7 +41,9 @@ export const ContactPage: React.FC = () => {
               </div>
               <h3 className="font-bold text-gray-900 mb-1">Email</h3>
               <p className="text-gray-500 text-sm mb-4">Notre équipe vous répond sous 24h.</p>
-              <a href="mailto:contact@blyssapp.fr" className="text-[#eb5e9d] font-semibold hover:underline">contact@blyssapp.fr</a>
+              <a href="mailto:contact@blyssapp.fr" className="text-[#eb5e9d] font-semibold hover:underline">
+                contact@blyssapp.fr
+              </a>
             </div>
 
             <div className="bg-white p-6 rounded-3xl shadow-lg shadow-gray-100 border border-white hover:border-pink-100 transition-colors group">
@@ -52,15 +52,21 @@ export const ContactPage: React.FC = () => {
               </div>
               <h3 className="font-bold text-gray-900 mb-1">Réseaux Sociaux</h3>
               <p className="text-gray-500 text-sm mb-4">Suivez nos actualités et coulisses.</p>
-              <div className="flex gap-4">
-                <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all" aria-label="Instagram"><Instagram size={16} /></a>
-                <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all" aria-label="LinkedIn"><Linkedin size={16} /></a>
-                <a href="https://www.tiktok.com/@blyss_app" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all" aria-label="Tiktok"></a>
+              <div className="flex gap-3">
+                <a href="https://www.instagram.com/blyss_app/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#eb5e9d] hover:text-white transition-all">
+                  <Instagram size={16} />
+                </a>
+                <a href="https://www.tiktok.com/@blyss_app" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#010101] hover:text-white transition-all">
+                  <TikTokIcon />
+                </a>
+                <a href="https://www.linkedin.com/company/blysapp/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#0077b5] hover:text-white transition-all">
+                  <Linkedin size={16} />
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Form */}
+          {/* Formulaire */}
           <div className="lg:col-span-2 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
             <div className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] shadow-2xl shadow-gray-200/50 border border-white">
               <form className="space-y-8" onSubmit={handleSubmit}>
@@ -88,7 +94,7 @@ export const ContactPage: React.FC = () => {
 
                 <div className="space-y-2 group">
                   <label className="text-sm font-bold text-gray-700 ml-1 group-focus-within:text-[#eb5e9d] transition-colors">Message</label>
-                  <textarea rows={6} value={message} onChange={e => setMessage(e.target.value)} required className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium resize-none" placeholder="Racontez-nous tout..."></textarea>
+                  <textarea rows={6} value={message} onChange={e => setMessage(e.target.value)} required className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 focus:outline-none focus:border-[#eb5e9d] focus:ring-4 focus:ring-pink-50 transition-all font-medium resize-none" placeholder="Racontez-nous tout..." />
                 </div>
 
                 <div className="pt-4">
@@ -102,5 +108,5 @@ export const ContactPage: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

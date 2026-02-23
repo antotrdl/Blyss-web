@@ -108,6 +108,7 @@
           },
           "sameAs": [
             "https://www.instagram.com/blyss_app/",
+            "https://www.tiktok.com/@blyss_app",
             "https://www.linkedin.com/company/blysapp/"
           ]
         },
@@ -128,8 +129,8 @@
           "description": "Application de gestion pour salon d'onglerie et prothésistes ongulaires indépendantes",
           "offers": {
             "@type": "AggregateOffer",
-            "lowPrice": "24.90",
-            "highPrice": "39.90",
+            "lowPrice": "29.90",
+            "highPrice": "49.90",
             "priceCurrency": "EUR",
             "offerCount": 3
           },
@@ -155,7 +156,7 @@
               "name": "Combien coûte Blyss ?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Blyss propose trois formules : Start à 39.90€/mois sans engagement, Sérénité à 29.90€/mois avec 3 mois d'engagement, et Signature à 24.90€/mois avec 12 mois d'engagement."
+                "text": "Blyss propose trois formules : Start à 49,90€/mois sans engagement, Sérénité à 39,90€/mois avec 3 mois d'engagement, et Signature à 29,90€/mois avec 12 mois d'engagement."
               }
             },
             {
@@ -193,217 +194,6 @@
     </script>
 
 
-  <style>
-    :root {
-      --blyss-pink: #eb5e9d;
-      --blyss-bg: #feeef2;
-    }
-
-    html,
-    body {
-      overscroll-behavior-y: none;
-      /* Empêche le "pull-to-refresh" accidentel sur mobile */
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--blyss-bg);
-      color: #1a1a1a;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-tap-highlight-color: transparent;
-      /* Supprime le flash bleu au clic sur mobile */
-    }
-
-    /* Barre de défilement globale personnalisée Premium */
-    @media (min-width: 768px) {
-      html {
-        scrollbar-width: thin;
-        scrollbar-color: #eb5e9d #fff5f9;
-      }
-
-      ::-webkit-scrollbar {
-        width: 12px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #fff5f9;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background-color: #eb5e9d;
-        border-radius: 20px;
-        border: 3px solid #fff5f9;
-        background-clip: content-box;
-        transition: background-color 0.3s ease;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: #d14d86;
-      }
-    }
-
-    .font-serif-elegant {
-      font-family: 'Instrument Serif', serif;
-    }
-
-    .font-outfit {
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .glass-light {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 10px 40px -10px rgba(235, 94, 157, 0.1);
-    }
-
-    .grainy-bg {
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    /* Animations de dérive (Drift) pour les blobs de couleur */
-    @keyframes drift {
-      0% {
-        transform: translate(0, 0) scale(1);
-      }
-
-      33% {
-        transform: translate(30px, -50px) scale(1.1);
-      }
-
-      66% {
-        transform: translate(-20px, 20px) scale(0.9);
-      }
-
-      100% {
-        transform: translate(0, 0) scale(1);
-      }
-    }
-
-    .animate-drift-slow {
-      animation: drift 25s infinite ease-in-out;
-    }
-
-    .animate-drift-medium {
-      animation: drift 18s infinite ease-in-out;
-    }
-
-    .animate-drift-fast {
-      animation: drift 12s infinite ease-in-out;
-    }
-
-    .pricing-card {
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .pricing-card:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-
-      100% {
-        transform: translateY(0px);
-      }
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    /* Animation du Splash Screen */
-    @keyframes draw-reveal {
-      0% {
-        -webkit-mask-position: 100% 100%;
-        mask-position: 100% 100%;
-      }
-
-      100% {
-        -webkit-mask-position: 0% 0%;
-        mask-position: 0% 0%;
-      }
-    }
-
-    .animate-draw {
-      -webkit-mask-image: linear-gradient(-45deg, black 50%, transparent 50%);
-      mask-image: linear-gradient(-45deg, black 50%, transparent 50%);
-      -webkit-mask-size: 300%;
-      mask-size: 300%;
-      animation: draw-reveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    ::selection {
-      background-color: rgba(235, 94, 157, 0.2);
-      color: #eb5e9d;
-    }
-
-    main section {
-      position: relative;
-      background: transparent;
-    }
-
-    /* Utilitaires pour masquer la scrollbar horizontalement sur mobile tout en gardant le scroll */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* Indicateur de scroll pour les tableaux sur mobile */
-    .scroll-indicator-mask {
-      mask-image: linear-gradient(to right, black 85%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
-    }
-
-    /* Safe area insets for notched devices */
-    @supports (padding: env(safe-area-inset-top)) {
-      body {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-    }
-
-    /* Accessibility: Focus styles */
-    :focus-visible {
-      outline: 2px solid #eb5e9d;
-      outline-offset: 2px;
-    }
-
-    button:focus-visible,
-    a:focus-visible {
-      outline: 2px solid #eb5e9d;
-      outline-offset: 2px;
-    }
-
-    /* Accessibility: Respect reduced motion preference */
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  </style>
 
 </head>
 

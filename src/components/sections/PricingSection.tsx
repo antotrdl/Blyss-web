@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import {
   Check, Sparkles, ChevronRight, ChevronDown, ChevronUp,
   X, ShieldCheck, ArrowRight, Lock, CheckCircle2,
-  TrendingUp, Building2, Palette, Users, Zap
+  TrendingUp, Building2, Zap
 } from 'lucide-react';
 import { ChevronLeft } from '../ui/PhoneMockup';
 
@@ -32,7 +33,7 @@ type Plan = {
 export const PLANS: Plan[] = [
   {
     title: "Start",
-    price: "69,90",
+    price: "49,90",
     commitment: null,
     description: "L'essentiel pour lancer votre activité sereinement.",
     icon: <Zap size={28} />,
@@ -59,15 +60,15 @@ export const PLANS: Plan[] = [
   },
   {
     title: "Signature",
-    price: "49,90",
+    price: "29,90",
     commitment: "Engagement 12 mois",
-    description: "Le boost ultime : visibilité premium et automatisation complète.",
+    description: "Le boost ultime : Encaissement en ligne et automatisation complète.",
     icon: <Sparkles size={32} />,
     isPopular: true,
     cardFeatures: [
-      "Visibilité résultats Premium",
       "Rappels post-prestation",
       "Encaissement en ligne",
+      "Support prioritaire",
       "+ fonctionnalités Start & Sérénité",
     ],
     sections: [
@@ -83,7 +84,6 @@ export const PLANS: Plan[] = [
         items: [
           "Paiement en ligne",
           "Prélèvement d'acomptes (Anti no-show)",
-          "Empreinte bancaire",
         ],
       },
       {
@@ -106,7 +106,7 @@ export const PLANS: Plan[] = [
   },
   {
     title: "Sérénité",
-    price: "54,90",
+    price: "39,90",
     commitment: "Engagement 3 mois",
     description: "Gagnez du temps avec une gestion financière et photo intégrée.",
     icon: <ShieldCheck size={28} />,
@@ -149,32 +149,14 @@ type CompRow = { label: string; start: boolean; serenite: boolean; signature: bo
 
 const COMPARISON_ROWS: CompRow[] = [
   { label: "Réservation en ligne pour les clients", start: true, serenite: true, signature: true },
-  { label: "Gestion des rendez-vous", start: true, serenite: true, signature: true },
-  { label: "Gestion de votre agenda", start: true, serenite: true, signature: true },
-  { label: "Page pro", start: true, serenite: true, signature: true },
+  { label: "Gestion des rendez-vous & agenda", start: true, serenite: true, signature: true },
+  { label: "Page pro personnalisée", start: true, serenite: true, signature: true },
   { label: "Portfolio Instagram", start: false, serenite: true, signature: true },
   { label: "Rappels & messages automatiques", start: false, serenite: true, signature: true },
-  { label: "Module finance : Statistiques & Facturation", start: false, serenite: true, signature: true },
+  { label: "Statistiques & Facturation", start: false, serenite: true, signature: true },
   { label: "Suivis post-prestation", start: false, serenite: false, signature: true },
-  { label: "Encaissement en ligne (bientôt disponible)*", start: false, serenite: false, signature: true },
-];
-
-const SALONS_SECTIONS = [
-  {
-    icon: <Building2 size={14} />,
-    title: "Multi-Comptes",
-    items: ["Gestion centralisée de plusieurs établissements", "Comptes collaborateurs illimités"],
-  },
-  {
-    icon: <Palette size={14} />,
-    title: "Personnalisation",
-    items: ["Marque blanche (White label)", "Développement de fonctionnalités sur mesure"],
-  },
-  {
-    icon: <Users size={14} />,
-    title: "Accompagnement",
-    items: ["Chef de projet dédié", "Formation des équipes sur site", "API ouverte"],
-  },
+  { label: "Encaissement en ligne", start: false, serenite: false, signature: true },
+  { label: "Support prioritaire", start: false, serenite: false, signature: true },
 ];
 
 // ─────────────────────────────────────────────────────────────────
@@ -207,12 +189,26 @@ const CellIcon = ({ check }: { check: boolean }) =>
 
 const BaseModal: React.FC<{
   onClose: () => void;
+  labelId: string;
   header: React.ReactNode;
   body: React.ReactNode;
   footer: React.ReactNode;
-}> = ({ onClose, header, body, footer }) => (
-  <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4">
-    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+}> = ({ onClose, labelId, header, body, footer }) => {
+  // Fermeture au clavier (Escape)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  return (
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby={labelId}
+    className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4"
+  >
+    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
 
     <div className="relative z-10 w-full sm:max-w-lg bg-white sm:rounded-[2.5rem] rounded-t-[2rem] shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 flex flex-col max-h-[92vh] sm:max-h-[88vh] overflow-hidden">
 
@@ -245,17 +241,18 @@ const BaseModal: React.FC<{
       </div>
     </div>
   </div>
-);
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────
 //  PricingModal
 // ─────────────────────────────────────────────────────────────────
 
-const PricingModal: React.FC<{ plan: Plan; onClose: () => void; onJoin: () => void }> = ({
+const PricingModal: React.FC<{ plan: Plan; onClose: () => void }> = ({
   plan,
   onClose,
-  onJoin,
 }) => {
+  const navigate = useNavigate();
   const startPrice = parseFloat(PLANS[0].price.replace(',', '.'));
   const planPrice = parseFloat(plan.price.replace(',', '.'));
   const months = plan.title === 'Signature' ? 12 : plan.title === 'Sérénité' ? 3 : 0;
@@ -264,6 +261,7 @@ const PricingModal: React.FC<{ plan: Plan; onClose: () => void; onJoin: () => vo
   return (
     <BaseModal
       onClose={onClose}
+      labelId="modal-plan-title"
 
       // ── Header ──────────────────────────────────────────────────
       header={
@@ -290,7 +288,7 @@ const PricingModal: React.FC<{ plan: Plan; onClose: () => void; onJoin: () => vo
 
             {/* Titre + description */}
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-serif-elegant italic text-gray-900 leading-tight">
+              <h2 id="modal-plan-title" className="text-xl font-serif-elegant italic text-gray-900 leading-tight">
                 {plan.title}
               </h2>
               <p className="text-[11px] text-gray-400 mt-0.5 leading-snug line-clamp-2">
@@ -364,7 +362,7 @@ const PricingModal: React.FC<{ plan: Plan; onClose: () => void; onJoin: () => vo
             Annuler
           </button>
           <button
-            onClick={onJoin}
+            onClick={() => navigate('/telecharger')}
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#eb5e9d] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-pink-200 hover:bg-pink-600 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             Commencer avec {plan.title} <ArrowRight size={16} />
@@ -374,60 +372,6 @@ const PricingModal: React.FC<{ plan: Plan; onClose: () => void; onJoin: () => vo
     />
   );
 };
-
-// ─────────────────────────────────────────────────────────────────
-//  SalonsModal — même structure, même garanties
-// ─────────────────────────────────────────────────────────────────
-
-const SalonsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => (
-  <BaseModal
-    onClose={onClose}
-
-    header={
-      <div className="px-6 pb-5 bg-gradient-to-br from-[#fff0f6] to-[#fce4f0]">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#eb5e9d] text-white flex items-center justify-center shrink-0 shadow-md shadow-pink-200">
-            <Building2 size={24} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-serif-elegant italic text-gray-900">Salons & Franchises</h2>
-            <p className="text-[11px] text-gray-400 mt-0.5">Solution sur-mesure pour grandes structures</p>
-          </div>
-          <div className="text-right shrink-0 pl-2">
-            <div className="text-2xl font-black text-[#c73a74] leading-none">Sur</div>
-            <div className="text-2xl font-black text-[#c73a74] leading-none">Devis</div>
-          </div>
-        </div>
-      </div>
-    }
-
-    body={SALONS_SECTIONS.map((section, i) => (
-      <div key={i}>
-        <h4 className="flex items-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2.5">
-          <span className="text-[#eb5e9d]">{section.icon}</span>
-          {section.title}
-        </h4>
-        <div className="grid gap-2">
-          {section.items.map((item, j) => <FeatureItem key={j} text={item} />)}
-        </div>
-      </div>
-    ))}
-
-    footer={
-      <>
-        <button
-          onClick={onClose}
-          className="text-sm font-bold text-gray-400 px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
-        >
-          Fermer
-        </button>
-        <button className="flex items-center gap-2 bg-[#eb5e9d] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-pink-200 hover:bg-pink-600 transition-all hover:scale-[1.02] active:scale-[0.98]">
-          Demander un devis <ArrowRight size={16} />
-        </button>
-      </>
-    }
-  />
-);
 
 // ─────────────────────────────────────────────────────────────────
 //  ComparisonTable
@@ -476,9 +420,8 @@ const ComparisonTable: React.FC = () => (
 //  PricingCards
 // ─────────────────────────────────────────────────────────────────
 
-const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
+const PricingCards = () => {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
-  const [isSalonsOpen, setIsSalonsOpen] = useState(false);
   const [showComparison, setShowComparison] = useState(false);
   const [activeIndex, setActiveIndex] = useState(1); // Signature centrée par défaut
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -623,8 +566,7 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
 
       {/* Bannière Salons */}
       <div
-        className="mt-4 md:mt-12 max-w-2xl mx-auto bg-[#fff5f9] rounded-[2rem] py-3 px-4 md:p-5 border border-pink-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 hover:shadow-lg hover:shadow-pink-100 transition-all cursor-pointer group"
-        onClick={() => setIsSalonsOpen(true)}
+        className="mt-4 md:mt-12 max-w-2xl mx-auto bg-[#fff5f9] rounded-[2rem] py-3 px-4 md:p-5 border border-pink-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5 hover:shadow-lg hover:shadow-pink-100 transition-all group"
       >
         <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
           <div className="w-12 h-12 bg-white rounded-2xl border border-pink-100 flex items-center justify-center text-[#eb5e9d] group-hover:scale-110 transition-transform">
@@ -637,9 +579,9 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
         </div>
         <div className="flex items-center gap-5">
           <span className="text-[10px] font-bold text-[#c73a74] uppercase tracking-wider">Sur devis</span>
-          <button className="bg-white text-[#c73a74] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#c73a74] hover:text-white shadow-sm">
+          <a className="bg-white text-[#c73a74] border border-pink-100 px-5 py-2.5 rounded-xl font-bold transition-colors text-xs hover:bg-[#c73a74] hover:text-white shadow-sm" href="mailto:contact@blyssapp.fr">
             Nous contacter
-          </button>
+          </a>
         </div>
       </div>
 
@@ -657,9 +599,8 @@ const PricingCards = ({ onJoin }: { onJoin: () => void }) => {
       {showComparison && <ComparisonTable />}
 
       {selectedPlan && (
-        <PricingModal plan={selectedPlan} onClose={() => setSelectedPlan(null)} onJoin={onJoin} />
+        <PricingModal plan={selectedPlan} onClose={() => setSelectedPlan(null)} />
       )}
-      {isSalonsOpen && <SalonsModal onClose={() => setIsSalonsOpen(false)} />}
     </>
   );
 };
@@ -670,7 +611,7 @@ export { PricingCards };
 //  PricingSection
 // ─────────────────────────────────────────────────────────────────
 
-export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => void }> = ({ onJoin }) => {
+export const PricingSection: React.FC = () => {
   const { targetRef: headerRef, isIntersecting: headerVisible } = useIntersectionObserver({ threshold: 0.2 });
 
   return (
@@ -687,7 +628,7 @@ export const PricingSection: React.FC<{ onSeeDetails: () => void; onJoin: () => 
             Un abonnement clair, sans frais cachés, pour transformer votre passion en business rentable.
           </p>
         </div>
-        <PricingCards onJoin={onJoin} />
+        <PricingCards />
       </div>
     </section>
   );
