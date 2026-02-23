@@ -10,7 +10,7 @@ const DownloadAppSection: React.FC = () => {
       {/* ══════════════════════════════════════
     MOBILE LAYOUT
 ══════════════════════════════════════ */}
-      <div className="md:hidden flex flex-col px-5 pt-28 pb-16 relative z-10">
+      <div className="md:hidden flex flex-col px-5 pt-36 pb-16 relative z-10">
 
         {/* Titre */}
         <h2 className="text-4xl font-serif-elegant italic leading-tight mb-4">
@@ -169,7 +169,7 @@ const DownloadAppSection: React.FC = () => {
       ══════════════════════════════════════ */}
       <div className="hidden md:block">
         <div className="container mx-auto max-w-7xl px-6 relative z-10">
-          <div className="flex flex-col items-center text-center mb-0 md:mb-16 pt-24 md:pt-0 md:py-20">
+          <div className="flex flex-col items-center text-center mb-0 md:mb-16 pt-24 md:pt-28 md:pb-20">
             <h2 className="text-4xl md:text-7xl font-serif-elegant italic mb-6 leading-tight">
               Gérez votre salon <br />
               <span className="text-[#eb5e9d]">depuis votre smartphone.</span>

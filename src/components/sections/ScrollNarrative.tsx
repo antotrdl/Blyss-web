@@ -168,6 +168,7 @@ export const ScrollNarrative: React.FC = () => {
         phoneRef.current.style.left = `${vw / 2 - phoneW_css / 2}px`;
         phoneRef.current.style.top = `${vh / 2 - phoneH / 2}px`;
         phoneRef.current.style.transform = `translateY(${phoneOffY}px) scale(${phoneSc}) perspective(900px) rotateX(${phoneTiltX.toFixed(2)}deg)`;
+        phoneRef.current.style.opacity = '1';
       }
 
       // ── BG dark ───────────────────────────────────────────────────────────
@@ -403,7 +404,7 @@ export const ScrollNarrative: React.FC = () => {
         </div>
 
         {/* ── iPhone mockup ─────────────────────────────────────────────────── */}
-        <div ref={phoneRef} className="absolute z-10 will-change-transform" style={{ width: 'min(280px, 48vw)' }}>
+        <div ref={phoneRef} className="absolute z-10 will-change-transform" style={{ width: 'min(280px, 48vw)', opacity: 0 }}>
 
           <div ref={glowRef} style={{ position: 'absolute', inset: '-80px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(235,94,157,0.1) 0%, transparent 68%)', filter: 'blur(24px)', opacity: 0.10, zIndex: -1, pointerEvents: 'none' }} />
 
