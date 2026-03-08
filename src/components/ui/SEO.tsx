@@ -22,6 +22,9 @@ export const SEO: React.FC<SEOProps> = ({
             <title>{fullTitle}</title>
             <meta name="title" content={fullTitle} />
             <meta name="description" content={description} />
+            <meta name="language" content="French" />
+            <meta name="geo.region" content="FR-74" />
+            <meta name="geo.placename" content="Annecy" />
 
             {/* Canonical URL */}
             <link rel="canonical" href={canonical} />
@@ -32,15 +35,19 @@ export const SEO: React.FC<SEOProps> = ({
             <meta property="og:title" content={fullTitle} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content={fullTitle} />
             <meta property="og:locale" content="fr_FR" />
             <meta property="og:site_name" content="Blyss" />
 
             {/* Twitter */}
-            <meta property="twitter:card" content="summary_large_image" />
-            <meta property="twitter:url" content={canonical} />
-            <meta property="twitter:title" content={fullTitle} />
-            <meta property="twitter:description" content={description} />
-            <meta property="twitter:image" content={image} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:url" content={canonical} />
+            <meta name="twitter:title" content={fullTitle} />
+            <meta name="twitter:description" content={description} />
+            <meta name="twitter:image" content={image} />
+            <meta name="twitter:image:alt" content={fullTitle} />
         </Helmet>
     );
 };

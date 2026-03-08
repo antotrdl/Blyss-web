@@ -23,43 +23,43 @@ const ICONS: IconDef[] = [
   {
     emoji: '📅', bg: '#E0EDFE', textColor: '#1A5CB8',
     heroLeft: 20, heroTop: 30, mobileLeft: 26, mobileTop: 26,
-    phase: 0.00, floatAmp: 5, floatDur: 6.8, rotAmp: 2.5, absStart: 0.70
+    phase: 0.00, floatAmp: 5, floatDur: 6.8, rotAmp: 2.5, absStart: 0.58
   },
   {
     emoji: '🔔', bg: '#FEF0DC', textColor: '#B45309',
     heroLeft: 12, heroTop: 52, mobileLeft: 9, mobileTop: 40,
-    phase: 1.15, floatAmp: 5, floatDur: 5.8, rotAmp: 3.0, absStart: 0.72
+    phase: 1.15, floatAmp: 5, floatDur: 5.8, rotAmp: 3.0, absStart: 0.61
   },
   {
     emoji: '💳', bg: '#DFFBEA', textColor: '#15803D',
     heroLeft: 22, heroTop: 68, mobileLeft: 9, mobileTop: 54,
-    phase: 2.30, floatAmp: 5, floatDur: 7.4, rotAmp: 2.5, absStart: 0.74
+    phase: 2.30, floatAmp: 5, floatDur: 7.4, rotAmp: 2.5, absStart: 0.64
   },
   {
     emoji: '👤', bg: '#F0E8FF', textColor: '#6B21A8',
     heroLeft: 36, heroTop: 78, mobileLeft: 26, mobileTop: 68,
-    phase: 0.70, floatAmp: 5, floatDur: 6.2, rotAmp: 2.5, absStart: 0.76
+    phase: 0.70, floatAmp: 5, floatDur: 6.2, rotAmp: 2.5, absStart: 0.67
   },
 
   {
     emoji: '📊', bg: '#DDFBF4', textColor: '#0F766E',
     heroLeft: 82, heroTop: 22, mobileLeft: 74, mobileTop: 26,
-    phase: 1.90, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.78
+    phase: 1.90, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.70
   },
   {
     emoji: '✉️', bg: '#FEFCE8', textColor: '#92400E',
     heroLeft: 86, heroTop: 44, mobileLeft: 91, mobileTop: 40,
-    phase: 3.10, floatAmp: 5, floatDur: 5.4, rotAmp: 3.0, absStart: 0.80
+    phase: 3.10, floatAmp: 5, floatDur: 5.4, rotAmp: 3.0, absStart: 0.73
   },
   {
     emoji: '⭐', bg: '#FEE8F4', textColor: '#9D174D',
     heroLeft: 80, heroTop: 63, mobileLeft: 91, mobileTop: 54,
-    phase: 0.45, floatAmp: 5, floatDur: 6.4, rotAmp: 2.5, absStart: 0.82
+    phase: 0.45, floatAmp: 5, floatDur: 6.4, rotAmp: 2.5, absStart: 0.76
   },
   {
     emoji: '🕐', bg: '#EBF0FF', textColor: '#4338CA',
     heroLeft: 64, heroTop: 78, mobileLeft: 74, mobileTop: 68,
-    phase: 2.60, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.84
+    phase: 2.60, floatAmp: 5, floatDur: 7.0, rotAmp: 2.5, absStart: 0.79
   },
 ];
 
@@ -153,7 +153,7 @@ export const ScrollNarrative: React.FC = () => {
         ? vh * 0.56 + 100
         : isTablet ? vh * 0.38 + 140
           : vh * 0.42 + 200;
-      const scaleP = ease(rng(p, 0.45, 0.82));
+      const scaleP = ease(rng(p, 0.38, 0.70));
       const phoneOffY = lerp(heroOffY, 0, scaleP);
       const phoneScFrom = isMobile ? 1.0 : isTablet ? 1.1 : 1.3;
       const phoneSc = lerp(phoneScFrom, 1.0, scaleP);
@@ -173,13 +173,13 @@ export const ScrollNarrative: React.FC = () => {
 
       // ── BG dark ───────────────────────────────────────────────────────────
       if (bgDarkRef.current) {
-        const r = lerp(0, 150, ease(rng(p, 0.26, 0.62)));
+        const r = lerp(0, 150, ease(rng(p, 0.20, 0.52)));
         bgDarkRef.current.style.clipPath = `circle(${r.toFixed(2)}% at 50% 50%)`;
       }
 
       // ── Phone frame : noir sur fond clair, argent sur fond sombre ─────────
       if (phoneFrameRef.current) {
-        const fp = ease(rng(p, 0.26, 0.62));
+        const fp = ease(rng(p, 0.20, 0.52));
         const darkStops  = [0x11, 0x2C, 0x1E, 0x0A];
         const lightStops = [0xE8, 0x9E, 0xBE, 0xD8];
         const stops = darkStops.map((d, i) => {
@@ -194,7 +194,7 @@ export const ScrollNarrative: React.FC = () => {
 
       // ── Glow (pulse lors des absorptions) ────────────────────────────────
       if (glowRef.current) {
-        const gp = ease(rng(p, 0.45, 0.80));
+        const gp = ease(rng(p, 0.38, 0.72));
         const absProgress = ICONS.reduce((s, icon) => s + easeOut(rng(p, icon.absStart, 0.97)), 0) / N;
         const glowVal = clamp(lerp(0.10, 0.50, gp) + absProgress * 0.12, 0, 0.62);
         const alpha = glowVal.toFixed(3);
@@ -206,7 +206,7 @@ export const ScrollNarrative: React.FC = () => {
       // Le bento (dashboard) est toujours à opacity 1 en dessous.
       // L'overlay (onboard) se retire seul — pas de fondu croisé.
       if (overlayRef.current)
-        overlayRef.current.style.opacity = String(1 - ease(rng(p, 0.80, 0.94)));
+        overlayRef.current.style.opacity = String(1 - ease(rng(p, 0.70, 0.86)));
       if (bentoRef.current) {
         bentoRef.current.style.opacity = '1';
         bentoRef.current.style.transform = 'scale(1)';
@@ -214,29 +214,29 @@ export const ScrollNarrative: React.FC = () => {
 
       // ── Hero (fade + translate + léger scale-down) ────────────────────────
       if (heroRef.current) {
-        const hp = ease(rng(p, 0.12, 0.38));
+        const hp = ease(rng(p, 0.08, 0.30));
         heroRef.current.style.opacity = String(1 - hp);
         heroRef.current.style.transform = `translateY(${lerp(0, -56, hp)}px) scale(${lerp(1, 0.94, hp)})`;
       }
 
       // ── S2 textes (slide X + léger slide Y) ──────────────────────────────
       if (s2LeftRef.current) {
-        const lp = ease(rng(p, 0.38, 0.68));
+        const lp = ease(rng(p, 0.30, 0.56));
         s2LeftRef.current.style.opacity = String(lp);
         s2LeftRef.current.style.transform = `translateY(calc(-50% + ${lerp(14, 0, lp)}px)) translateX(${lerp(-44, 0, lp)}px)`;
       }
       if (s2RightRef.current) {
-        const rp = ease(rng(p, 0.52, 0.80));
+        const rp = ease(rng(p, 0.44, 0.68));
         s2RightRef.current.style.opacity = String(rp);
         s2RightRef.current.style.transform = `translateY(calc(-50% + ${lerp(14, 0, rp)}px)) translateX(${lerp(44, 0, rp)}px)`;
       }
       if (s2ToggleRef.current)
-        s2ToggleRef.current.style.opacity = String(ease(rng(p, 0.72, 0.90)));
+        s2ToggleRef.current.style.opacity = String(ease(rng(p, 0.60, 0.80)));
 
       // ── Scroll cue : adapte sa couleur au fond ────────────────────────────
       if (scrollCueRef.current) {
-        const bgDark = ease(rng(p, 0.26, 0.50));
-        const cueFade = 1 - ease(rng(p, 0.50, 0.70));
+        const bgDark = ease(rng(p, 0.20, 0.42));
+        const cueFade = 1 - ease(rng(p, 0.42, 0.58));
         const r = Math.round(lerp(0, 235, bgDark));
         const g = Math.round(lerp(0, 94, bgDark));
         const b = Math.round(lerp(0, 157, bgDark));
@@ -248,7 +248,7 @@ export const ScrollNarrative: React.FC = () => {
       }
 
       // ── Icons ─────────────────────────────────────────────────────────────
-      const floatDecay = ease(rng(p, 0.55, 0.78));
+      const floatDecay = ease(rng(p, 0.46, 0.66));
       const phoneCenterX = vw * 0.5;
       const phoneCenterY = vh * 0.5 + phoneOffY;
       const easeIn3 = (x: number) => x * x * x;
@@ -275,7 +275,7 @@ export const ScrollNarrative: React.FC = () => {
         const rawLeft = (isMobile ? icon.mobileLeft : icon.heroLeft) / 100;
         const rawTop = (isMobile ? icon.mobileTop : icon.heroTop) / 100;
 
-        const prePull = ease(rng(p, 0.62, icon.absStart));
+        const prePull = ease(rng(p, 0.48, icon.absStart));
         const gravX = (phoneCenterX - rawLeft * vw) * 0.14 * prePull;
         const gravY = (phoneCenterY - rawTop * vh) * 0.14 * prePull;
 
@@ -330,7 +330,7 @@ export const ScrollNarrative: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: '300vh', position: 'relative' }}>
+    <div ref={containerRef} style={{ height: '230vh', position: 'relative' }}>
       <div className="sticky top-0 overflow-hidden scroll-narrative-sticky" style={{ height: '100dvh' }}>
 
         <div className="absolute inset-0" style={{ background: BG_CREAM }} />
